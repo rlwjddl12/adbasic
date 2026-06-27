@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>애드베이직 — 온라인 광고 무료 가이드</title>
+<meta name="description" content="네이버, 구글, 카카오, 메타 광고를 처음 시작하는 분들을 위한 무료 실전 가이드. 계정 생성부터 최적화까지 단계별로 설명합니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blue:#2563eb;--blue-light:#eff6ff;--blue-mid:#dbeafe;
+  --green:#16a34a;--green-light:#f0fdf4;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --bg:#f8fafc;--white:#ffffff;
+  --border:#e2e8f0;--border2:#cbd5e1;
+  --warn-bg:#fffbeb;--warn:#92400e;--warn-border:#fde68a;
+  --danger-bg:#fef2f2;--danger:#b91c1c;--danger-border:#fecaca;
+  --good-bg:#f0fdf4;--good:#15803d;--good-border:#bbf7d0;
+  --radius:10px;--radius-sm:6px;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,0.07),0 2px 4px -2px rgba(0,0,0,0.05);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard','Inter',sans-serif;font-size:14px;line-height:1.6;min-height:100vh;}
+
+/* ─── TOP NAV ─── */
+.topnav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 24px;gap:0;}
+.topnav-logo{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--text);letter-spacing:-0.5px;text-decoration:none;margin-right:32px;display:flex;align-items:center;gap:6px;}
+.topnav-logo .dot{width:8px;height:8px;background:var(--blue);border-radius:50%;}
+.topnav-links{display:flex;gap:4px;flex:1;}
+.topnav-link{padding:6px 12px;font-size:13px;font-weight:500;color:var(--text2);border-radius:6px;cursor:pointer;transition:color .1s,background .1s;border:none;background:transparent;font-family:inherit;}
+.topnav-link:hover{background:#f1f5f9;color:var(--text);}
+.topnav-link.active{background:var(--blue-light);color:var(--blue);}
+.topnav-right{display:flex;gap:8px;align-items:center;}
+.badge-free{background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:0.3px;}
+
+/* ─── LAYOUT ─── */
+.page-wrap{display:flex;padding-top:56px;min-height:100vh;}
+.sidebar{width:224px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;}
+.sidebar-inner{padding:16px 0;flex:1;}
+.sidebar-section{margin-bottom:4px;}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);padding:0 16px;margin-bottom:6px;margin-top:16px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:7px 16px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:inherit;border-left:2px solid transparent;transition:color .1s,background .1s;border-radius:0;}
+.sidebar-item:hover{color:var(--text);background:#f8fafc;}
+.sidebar-item.active{color:var(--blue);border-left-color:var(--blue);background:var(--blue-light);}
+.platform-icon{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.icon-nsa{background:#dcfce7;color:#16a34a;}
+.icon-gfa{background:#e0f2fe;color:#0284c7;}
+.icon-google{background:#eff6ff;color:#2563eb;}
+.icon-kakao{background:#fef9c3;color:#854d0e;}
+.icon-meta{background:#ede9fe;color:#7c3aed;}
+.sidebar-footer{padding:16px;border-top:1px solid var(--border);margin-top:auto;}
+.sidebar-footer-text{font-size:11px;color:var(--text3);line-height:1.6;}
+
+/* ─── MAIN CONTENT ─── */
+.main-wrap{margin-left:224px;flex:1;min-width:0;}
+.main-content{max-width:800px;padding:40px 48px 80px;}
+
+/* ─── PLATFORM VIEW ─── */
+.platform-view{display:none;}
+.platform-view.active{display:block;}
+
+/* ─── HERO (HOME) ─── */
+.hero-section{padding:64px 0 56px;border-bottom:1px solid var(--border);margin-bottom:48px;}
+.hero-kicker{display:inline-flex;align-items:center;gap:6px;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:20px;letter-spacing:0.3px;}
+.hero-kicker-dot{width:6px;height:6px;background:var(--blue);border-radius:50%;}
+.hero-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-1.5px;line-height:1.1;color:var(--text);max-width:520px;margin-bottom:16px;}
+.hero-h1 em{font-style:normal;color:var(--blue);}
+.hero-sub{font-size:15px;color:var(--text2);max-width:440px;line-height:1.7;margin-bottom:32px;}
+.hero-cta-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.btn-primary{background:var(--blue);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.btn-primary:hover{opacity:.88;}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2);padding:10px 22px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:color .1s,background .1s;}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
+.hero-stats{display:flex;gap:32px;margin-top:40px;padding-top:32px;border-top:1px solid var(--border);}
+.hero-stat-num{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--text);letter-spacing:-0.5px;}
+.hero-stat-label{font-size:12px;color:var(--text3);margin-top:2px;}
+
+/* ─── PLATFORM CARDS (HOME) ─── */
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:48px;}
+.platform-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:border-color .15s;box-shadow:var(--shadow);}
+.platform-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.platform-card-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-bottom:12px;}
+.platform-card-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.platform-card-desc{font-size:12px;color:var(--text3);line-height:1.5;}
+.platform-card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px;}
+.platform-card-tag{font-size:10px;padding:2px 7px;border-radius:20px;background:#f1f5f9;color:var(--text2);}
+
+/* ─── SECTION HEADERS ─── */
+.section-kicker{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--text);margin-bottom:8px;}
+.section-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:24px;max-width:500px;}
+
+/* ─── PLATFORM HEADER ─── */
+.platform-header{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;box-shadow:var(--shadow);}
+.platform-name{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px;margin-bottom:6px;color:var(--text);}
+.platform-desc{font-size:13px;color:var(--text2);max-width:500px;line-height:1.7;margin-bottom:14px;}
+.platform-meta{display:flex;gap:6px;flex-wrap:wrap;}
+.meta-chip{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);background:var(--white);font-weight:500;}
+
+/* ─── CHAPTER ─── */
+.chapter{margin-bottom:28px;}
+.chapter-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.chapter-num{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--blue);background:var(--blue-light);padding:3px 10px;border-radius:20px;}
+.chapter-title{font-size:17px;font-weight:600;color:var(--text);letter-spacing:-0.3px;}
+.chapter-divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
+
+/* ─── TABS ─── */
+.tab-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px;background:#f1f5f9;border-radius:8px;padding:4px;}
+.tab-btn{font-size:12px;font-weight:500;padding:6px 14px;border-radius:6px;border:none;background:transparent;color:var(--text2);cursor:pointer;transition:color .1s,background .1s;font-family:inherit;}
+.tab-btn:hover{color:var(--text);background:rgba(255,255,255,0.6);}
+.tab-btn.active{background:var(--white);color:var(--blue);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ─── CARD ─── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:10px;box-shadow:var(--shadow);}
+.card-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;}
+.card-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px;}
+
+/* ─── STEPS ─── */
+.step-list{display:flex;flex-direction:column;}
+.step-item{display:flex;position:relative;}
+.step-left{display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0;}
+.step-dot{width:22px;height:22px;border-radius:50%;background:var(--blue-light);border:2px solid var(--blue-mid);font-size:10px;font-weight:700;color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;}
+.step-line{width:2px;background:var(--border);flex:1;min-height:10px;margin-top:2px;}
+.step-item:last-child .step-line{display:none;}
+.step-body{padding:0 0 20px 12px;flex:1;}
+.step-title{font-size:13px;font-weight:600;margin-bottom:4px;padding-top:2px;color:var(--text);}
+.step-desc{font-size:12px;color:var(--text2);line-height:1.7;}
+.step-note{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-top:8px;font-size:12px;color:var(--text2);line-height:1.7;}
+.step-note strong{color:var(--text);font-weight:600;}
+
+/* ─── NOTICES ─── */
+.tip{background:var(--good-bg);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:9px 13px;font-size:12px;color:var(--good);line-height:1.7;margin-top:8px;}
+.tip strong{font-weight:600;}
+.warn{background:var(--warn-bg);border-left:3px solid #d97706;border-radius:0 6px 6px 0;padding:9px 13px;font-size:12px;color:var(--warn);line-height:1.7;margin-top:8px;}
+.warn strong{font-weight:600;}
+.good{background:var(--good-bg);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:9px 13px;font-size:12px;color:var(--good);line-height:1.7;margin-top:8px;}
+.good strong{font-weight:600;}
+.danger{background:var(--danger-bg);border-left:3px solid #dc2626;border-radius:0 6px 6px 0;padding:9px 13px;font-size:12px;color:var(--danger);line-height:1.7;margin-top:8px;}
+
+/* ─── BADGES ─── */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;letter-spacing:0.5px;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.b-nsa{background:#dcfce7;color:#15803d;}
+.b-gfa{background:#e0f2fe;color:#0369a1;}
+.b-google{background:#eff6ff;color:#1d4ed8;}
+.b-kakao{background:#fefce8;color:#854d0e;}
+.b-meta{background:#ede9fe;color:#6d28d9;}
+
+/* ─── INFO GRID ─── */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:12px 0;}
+.info-cell{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:10px 12px;}
+.info-cell .lbl{font-size:10px;color:var(--text3);margin-bottom:3px;font-weight:500;}
+.info-cell .val{font-size:12px;font-weight:600;color:var(--text);}
+
+/* ─── TABLE ─── */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;padding:8px 12px;font-size:11px;font-weight:600;color:var(--text2);border-bottom:2px solid var(--border);background:#f8fafc;}
+td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f8fafc;}
+.tag-high{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--danger-bg);color:var(--danger);}
+.tag-mid{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--warn-bg);color:var(--warn);}
+.tag-low{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--good-bg);color:var(--good);}
+
+/* ─── CALC ─── */
+.calc-row{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.calc-item{display:flex;align-items:center;gap:12px;}
+.calc-item label{font-size:12px;color:var(--text2);min-width:90px;font-weight:500;}
+.calc-item input[type=range]{flex:1;-webkit-appearance:none;height:4px;background:#e2e8f0;border-radius:2px;outline:none;}
+.calc-item input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--blue);cursor:pointer;box-shadow:0 1px 3px rgba(37,99,235,0.3);}
+.calc-item .val{font-size:13px;font-weight:600;color:var(--blue);min-width:80px;text-align:right;}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;}
+.result-cell{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:12px 14px;}
+.result-cell .lbl{font-size:11px;color:var(--text3);margin-bottom:5px;font-weight:500;}
+.result-cell .rval{font-size:18px;font-weight:700;font-family:'Space Grotesk',sans-serif;}
+.rval.green{color:#16a34a;}
+.rval.yellow{color:#d97706;}
+.rval.white{color:var(--text);}
+
+/* ─── SIZE GRID ─── */
+.size-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;}
+.size-card{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:11px 13px;}
+.size-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.size-px{font-size:12px;color:var(--blue);margin-bottom:5px;font-weight:600;}
+.size-tag{font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid #d1d5db;color:var(--text2);display:inline-block;}
+
+/* ─── TOOL GRID ─── */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;}
+.tool-card{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:11px 13px;}
+.tool-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.tool-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+.tool-tag{font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid #d1d5db;color:var(--text2);display:inline-block;margin-top:5px;}
+
+/* ─── COPY ITEMS ─── */
+.copy-item{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:11px 13px;margin-bottom:8px;}
+.copy-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:5px;font-weight:600;}
+.copy-ex{font-size:13px;color:var(--text);line-height:1.7;}
+.copy-bad{font-size:12px;color:#b91c1c;margin-top:5px;text-decoration:line-through;}
+
+/* ─── RULE LIST ─── */
+.rule-list{display:flex;flex-direction:column;gap:10px;}
+.rule-item{display:flex;gap:10px;align-items:flex-start;}
+.rule-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
+.rule-title{font-size:13px;font-weight:600;color:var(--text);}
+.rule-sub{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.6;}
+
+/* ─── PREVIEW ─── */
+.preview-wrap{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-top:10px;}
+.preview-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;font-weight:600;}
+.banner-wide{width:100%;height:52px;background:#fff;border:1px solid #d1d5db;border-radius:4px;display:flex;align-items:center;overflow:hidden;margin-bottom:8px;}
+.banner-wide .img-z{width:76px;height:100%;background:#dcfce7;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#16a34a;}
+.banner-wide .txt-z{padding:0 10px;flex:1;}
+.banner-wide .txt-z .t{font-size:11px;font-weight:600;color:#111827;margin-bottom:2px;}
+.banner-wide .txt-z .d{font-size:10px;color:#6b7280;}
+.banner-wide .btn-z{padding:0 10px;}
+.banner-wide .btn-z span{font-size:10px;background:#16a34a;color:#fff;font-weight:600;padding:3px 8px;border-radius:3px;}
+.banner-box{width:100px;background:#fff;border:1px solid #d1d5db;border-radius:4px;overflow:hidden;}
+.banner-box .img-z{width:100%;height:60px;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-size:10px;color:#16a34a;}
+.banner-box .txt-z{padding:6px 8px;}
+.banner-box .ttl{font-size:10px;font-weight:600;color:#111827;margin-bottom:2px;}
+.banner-box .dsc{font-size:9px;color:#6b7280;margin-bottom:4px;}
+.banner-box .btn{font-size:9px;background:#16a34a;color:#fff;font-weight:600;padding:2px 6px;border-radius:2px;display:inline-block;}
+
+/* ─── MOCKUP ─── */
+.mockup-wrap{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-top:14px;}
+.mockup-bar{background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.mockup-dots{display:flex;gap:4px;}
+.mockup-dot{width:8px;height:8px;border-radius:50%;}
+.mockup-url{flex:1;background:#f1f5f9;border-radius:3px;padding:3px 8px;font-size:10px;color:#6b7280;}
+.mockup-ui{background:#fff;border:1px solid #d1d5db;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.mockup-header{padding:8px 12px;display:flex;align-items:center;gap:10px;background:#f9fafb;border-bottom:1px solid #e5e7eb;}
+.mockup-body{display:flex;}
+.mockup-sidebar{border-right:1px solid #e5e7eb;background:#f9fafb;padding:10px 0;flex-shrink:0;min-width:110px;}
+.mockup-sidebar-item{padding:5px 12px;font-size:10px;cursor:default;white-space:nowrap;}
+.mockup-sidebar-item.active{background:rgba(37,99,235,0.07);color:#2563eb;border-left:2px solid #2563eb;}
+.mockup-sidebar-item:not(.active){color:#6b7280;}
+.mockup-content{flex:1;padding:14px;min-width:0;background:#fff;}
+.mockup-label{font-size:10px;color:#6b7280;margin-bottom:4px;font-weight:500;}
+.mockup-field{background:#f9fafb;border:1px solid #d1d5db;border-radius:4px;padding:5px 8px;font-size:11px;color:#374151;margin-bottom:8px;}
+.mockup-field.focus{border-color:#2563eb;color:#111827;background:#fff;}
+.mockup-option-row{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+.mockup-option{border:1px solid #d1d5db;border-radius:4px;padding:5px 10px;font-size:10px;color:#6b7280;cursor:default;background:#fff;}
+.mockup-option.selected{border-color:#2563eb;color:#1d4ed8;background:#eff6ff;}
+.mockup-btn{display:inline-block;padding:5px 14px;border-radius:4px;font-size:11px;cursor:default;}
+.mockup-btn.primary{background:#2563eb;color:#fff;font-weight:600;}
+.mockup-btn.ghost{border:1px solid #d1d5db;color:#6b7280;}
+.callout{display:flex;align-items:flex-start;gap:7px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:7px 10px;font-size:11px;color:#15803d;margin-top:8px;}
+.callout-num{background:#16a34a;color:#fff;width:16px;height:16px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.callout-warn{background:#fffbeb;border-color:#fde68a;color:#92400e;}
+.callout-warn .callout-num{background:#d97706;color:#fff;}
+.mockup-section-title{font-size:11px;font-weight:700;color:#111827;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e5e7eb;}
+.mockup-table{width:100%;border-collapse:collapse;}
+.mockup-table th{font-size:10px;color:#6b7280;padding:4px 8px;text-align:left;border-bottom:1px solid #e5e7eb;background:#f9fafb;font-weight:600;}
+.mockup-table td{font-size:10px;padding:5px 8px;border-bottom:1px solid #f3f4f6;color:#111827;}
+.mockup-ad-preview{background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:10px 12px;margin-top:6px;}
+.mockup-ad-title{font-size:12px;color:#1d4ed8;font-weight:600;margin-bottom:2px;}
+.mockup-ad-url{font-size:10px;color:#6b7280;margin-bottom:3px;}
+.mockup-ad-desc{font-size:11px;color:#374151;}
+
+/* ─── FOOTER ─── */
+.site-footer{background:var(--white);border-top:1px solid var(--border);padding:32px 48px;margin-left:224px;}
+.footer-inner{max-width:800px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+.footer-logo span{color:var(--blue);}
+.footer-copy{font-size:12px;color:var(--text3);}
+.footer-links{display:flex;gap:16px;}
+.footer-link{font-size:12px;color:var(--text3);cursor:pointer;}
+.footer-link:hover{color:var(--blue);}
+
+@media(max-width:768px){
+  .sidebar{position:fixed;top:56px;left:-224px;z-index:300;transition:left .25s;display:flex;}
+  .sidebar.mobile-open{left:0;box-shadow:4px 0 20px rgba(0,0,0,0.15);}
+  .main-wrap{margin-left:0;}
+  .main-content{padding:24px 16px 80px;}
+  .site-footer{margin-left:0;padding:24px 16px;}
+  .topnav-links{display:none;}
+  .hamburger{display:flex !important;}
+  .sidebar-overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:299;}
+}
+@media(min-width:769px){.hamburger{display:none !important;}.sidebar-overlay{display:none !important;}}
+
+/* ─── BOARD ─── */
+.board-wrap{max-width:720px;}
+.board-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.board-title-area h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--text);}
+.board-title-area p{font-size:13px;color:var(--text2);margin-top:4px;}
+.board-write-btn{background:var(--blue);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.board-write-btn:hover{opacity:.88;}
+.board-tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:0;}
+.board-tab{padding:8px 16px;font-size:13px;font-weight:500;color:var(--text2);border:none;background:transparent;cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .1s,background .1s;}
+.board-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.board-tab:hover{color:var(--text);}
+.post-list{display:flex;flex-direction:column;gap:8px;}
+.post-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;cursor:pointer;transition:color .1s,background .1s;box-shadow:var(--shadow);}
+.post-item:hover{border-color:var(--blue);box-shadow:var(--shadow-md);}
+.post-item-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.post-category{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--blue-light);color:var(--blue);white-space:nowrap;}
+.post-title{font-size:14px;font-weight:600;color:var(--text);flex:1;line-height:1.4;}
+.post-meta{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--text3);}
+.post-meta-item{display:flex;align-items:center;gap:3px;}
+.post-preview{font-size:12px;color:var(--text2);margin:4px 0 8px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+/* Write Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:14px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.15);}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);}
+.modal-header h3{font-size:16px;font-weight:700;color:var(--text);}
+.modal-close{width:28px;height:28px;border-radius:6px;border:none;background:#f1f5f9;cursor:pointer;font-size:16px;color:var(--text2);display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:#e2e8f0;}
+.modal-body{padding:20px 24px;}
+.form-group{margin-bottom:14px;}
+.form-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px;display:block;}
+.form-input{width:100%;border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit;color:var(--text);transition:border-color .15s;outline:none;}
+.form-input:focus{border-color:var(--blue);}
+.form-select{width:100%;border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit;color:var(--text);background:var(--white);outline:none;cursor:pointer;}
+.form-textarea{width:100%;border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit;color:var(--text);resize:vertical;min-height:120px;outline:none;transition:border-color .15s;}
+.form-textarea:focus{border-color:var(--blue);}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;}
+.btn-cancel{background:#f1f5f9;color:var(--text2);border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;}
+.btn-cancel:hover{background:#e2e8f0;}
+.btn-submit{background:var(--blue);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.btn-submit:hover{opacity:.88;}
+.btn-submit:disabled{opacity:.5;cursor:default;}
+
+/* Detail View */
+.post-detail{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);}
+.post-detail-header{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.post-detail-cat{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--blue-light);color:var(--blue);display:inline-block;margin-bottom:10px;}
+.post-detail-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.4px;color:var(--text);margin-bottom:8px;line-height:1.3;}
+.post-detail-meta{font-size:12px;color:var(--text3);}
+.post-detail-body{font-size:14px;color:var(--text);line-height:1.8;white-space:pre-wrap;margin-bottom:24px;}
+.post-back-btn{display:flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;margin-bottom:20px;transition:color .1s,background .1s;}
+.post-back-btn:hover{border-color:var(--blue);color:var(--blue);}
+
+/* Comments */
+.comment-section{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+.comment-section-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:14px;}
+.comment-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.comment-item{background:#f8fafc;border-radius:8px;padding:12px 14px;}
+.comment-author{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.comment-time{font-size:11px;color:var(--text3);margin-left:8px;font-weight:400;}
+.comment-body{font-size:13px;color:var(--text);line-height:1.6;}
+.comment-form{display:flex;gap:8px;margin-top:4px;}
+.comment-input{flex:1;border:1px solid var(--border2);border-radius:8px;padding:8px 12px;font-size:13px;font-family:inherit;outline:none;transition:border-color .15s;}
+.comment-input:focus{border-color:var(--blue);}
+.comment-submit{background:var(--blue);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:opacity .15s;}
+.comment-submit:hover{opacity:.88;}
+
+.board-empty{text-align:center;padding:60px 20px;color:var(--text3);}
+.board-empty-icon{font-size:36px;margin-bottom:12px;}
+.board-empty-text{font-size:14px;}
+.board-loading{text-align:center;padding:40px;color:var(--text3);font-size:13px;}
+.like-btn{display:inline-flex;align-items:center;gap:4px;background:#f1f5f9;border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:12px;color:var(--text2);cursor:pointer;transition:color .1s,background .1s;font-family:inherit;}
+.like-btn:hover,.like-btn.liked{background:var(--blue-light);border-color:var(--blue-mid);color:var(--blue);}
+.views-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--text3);}
+
+
+.mt6{margin-top:6px;}.mt8{margin-top:8px;}.mt10{margin-top:10px;}.mt12{margin-top:12px;}
+.mb6{margin-bottom:6px;}.mb8{margin-bottom:8px;}
+.fs10-muted{font-size:10px;color:#6b7280;}.fs10-muted2{font-size:10px;color:#9ca3af;}
+.fs11-muted{font-size:11px;color:#6b7280;}.fs12-muted{font-size:12px;color:#6b7280;}
+.fs13-muted{font-size:13px;color:#6b7280;}
+
+
+/* PERF: 목업 최적화 */
+.mockup-wrap{contain:layout style;will-change:auto;}
+.mockup-ui{contain:layout;}
+.platform-view{contain:layout style paint;content-visibility:auto;}
+.tab-panel{contain:layout style;}
+.card{contain:layout;}
+
+
+/* ─── MOCKUP SIMPLE (경량화) ─── */
+.mockup-simple{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-top:12px;font-size:12px;display:flex;flex-direction:column;gap:5px;}
+.ms-url{color:#64748b;font-size:10px;font-family:monospace;background:#f1f5f9;padding:3px 8px;border-radius:4px;display:inline-block;}
+.ms-section{font-weight:700;color:#0f172a;font-size:11px;border-bottom:1px solid #e2e8f0;padding-bottom:5px;margin-bottom:2px;}
+.ms-field{color:#1d4ed8;background:#eff6ff;border-radius:4px;padding:4px 8px;font-family:monospace;font-size:11px;}
+.ms-option{color:#15803d;background:#f0fdf4;border-radius:4px;padding:4px 8px;font-size:11px;}
+.ms-tip{color:#92400e;background:#fffbeb;border-radius:4px;padding:4px 8px;font-size:11px;}
+
+
+/* ─── 유틸리티 (인라인 style 대체) ─── */
+.mt4{margin-top:4px}.mt6{margin-top:6px}.mt8{margin-top:8px}.mt10{margin-top:10px}.mt12{margin-top:12px}.mt14{margin-top:14px}.mt16{margin-top:16px}.mt20{margin-top:20px}
+.mb4{margin-bottom:4px}.mb6{margin-bottom:6px}.mb8{margin-bottom:8px}.mb10{margin-bottom:10px}.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}
+.t9g{font-size:9px;color:#6b7280}.t10g{font-size:10px;color:#6b7280}.t11g{font-size:11px;color:#6b7280}.t12g{font-size:12px;color:#6b7280}.t13g{font-size:13px;color:#6b7280}
+.t10s{font-size:10px;color:#9ca3af}.t11s{font-size:11px;color:#9ca3af}
+.fw6{font-weight:600;color:#0f172a}
+.cp{cursor:pointer}
+
+
+.dl-btn{display:inline-flex;align-items:center;gap:4px;background:#2563eb;color:#fff;font-size:12px;font-weight:600;padding:6px 14px;border-radius:6px;text-decoration:none;transition:opacity .15s;white-space:nowrap;}
+.dl-btn:hover{opacity:.85;}
+@media(max-width:480px){.dl-btn{padding:6px 10px;font-size:11px;}}
+
+
+.hamburger{display:none;align-items:center;justify-content:center;width:34px;height:34px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:16px;margin-right:8px;flex-shrink:0;}
+.sidebar-overlay{display:none;cursor:pointer;}
+
+</style>
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="메뉴">☰</button>
+  <a class="topnav-logo" href="#" onclick="showView('home',null)">
+    <div class="dot"></div>애드베이직
+  </a>
+  <div class="topnav-links">
+    <button class="topnav-link" onclick="showView('nsa',this)">네이버 SA</button>
+    <button class="topnav-link" onclick="showView('gfa',this)">네이버 GFA</button>
+    <button class="topnav-link" onclick="showView('google',this)">구글 애즈</button>
+    <button class="topnav-link" onclick="showView('kakao',this)">카카오</button>
+    <button class="topnav-link" onclick="showView('meta',this)">메타</button>
+    <button class="topnav-link" onclick="showView('board',this)">게시판</button>
+  </div>
+  <div class="topnav-right">
+    <span class="badge-free">무료 공개</span>
+    <button class="dl-btn" onclick="downloadFile()" title="HTML 파일 다운로드">⬇ 다운로드</button>
+  </div>
+</nav>
+
+<!-- LAYOUT -->
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-label">시작하기</div>
+      <button class="sidebar-item active" onclick="showView('home',this)">
+        <div class="platform-icon" style="background:#f1f5f9;color:#475569;">🏠</div> 홈
+      </button>
+
+      <div class="sidebar-label" class="mt20">매체 선택</div>
+      <button class="sidebar-item" onclick="showView('nsa',this)">
+        <div class="platform-icon icon-nsa">N</div> 네이버 SA
+      </button>
+      <button class="sidebar-item" onclick="showView('gfa',this)">
+        <div class="platform-icon icon-gfa">G</div> 네이버 GFA
+      </button>
+      <button class="sidebar-item" onclick="showView('google',this)">
+        <div class="platform-icon icon-google">G</div> 구글 애즈
+      </button>
+      <button class="sidebar-item" onclick="showView('kakao',this)">
+        <div class="platform-icon icon-kakao">K</div> 카카오 모먼트
+      </button>
+      <button class="sidebar-item" onclick="showView('meta',this)">
+        <div class="platform-icon icon-meta">M</div> 메타 광고
+      </button>
+
+      <div class="sidebar-label" class="mt20">커뮤니티</div>
+      <button class="sidebar-item" onclick="showView('board',this)">
+        <div class="platform-icon" style="background:#f0f9ff;color:#0284c7;">💬</div> 자유 게시판
+      </button>
+    </div>
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-text">네이버 · 구글 · 카카오 · 메타<br>퍼포먼스 마케팅 무료 가이드</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-wrap">
+  <div class="main-content">
+<!-- ===== HOME ===== -->
+  <div class="platform-view active" id="view-home">
+    <div class="hero-section">
+      <div class="hero-kicker"><div class="hero-kicker-dot"></div> 무료 광고 가이드</div>
+      <h1 class="hero-h1">온라인 광고,<br><em>직접 세팅</em>하세요</h1>
+      <p class="hero-sub">네이버 SA · GFA, 구글 애즈, 카카오 모먼트, 메타 광고까지 — 계정 생성부터 최적화까지 무료로 제공합니다.</p>
+      <div class="hero-cta-row"><button class="btn-primary" onclick="showView('nsa',null)">가이드 시작하기 →</button><button class="btn-ghost" onclick="showView('google',null)">구글 애즈 보기</button></div><div style="display:flex;gap:32px;margin-top:32px;padding-top:24px;border-top:1px solid #e2e8f0;"><div><div class="hero-stat-num">5개</div><div class="hero-stat-label">광고 매체 가이드</div></div><div><div class="hero-stat-num">무료</div><div class="hero-stat-label">완전 무료 공개</div></div><div><div class="hero-stat-num">실무</div><div class="hero-stat-label">현직 마케터 작성</div></div></div>
+    <div style="display:none">
+        <button class="chip" onclick="showViewByName('nsa')">네이버 SA</button>
+        <button class="chip" onclick="showViewByName('gfa')">네이버 GFA</button>
+        <button class="chip" onclick="showViewByName('google')">구글 애즈</button>
+        <button class="chip" onclick="showViewByName('kakao')">카카오</button>
+        <button class="chip" onclick="showViewByName('meta')">메타</button>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div class="chapter">
+        <div class="section-kicker">매체 선택</div><div class="section-title">어떤 광고부터 시작할까요?</div><div class="section-desc">업종과 목표에 맞는 매체를 선택하세요. 각 매체를 클릭하면 세팅 방법부터 최적화까지 확인할 수 있어요.</div>
+        <div class="platform-grid">
+          <div class="card" class="cp" onclick="showViewByName('nsa')">
+            <span class="badge b-nsa">네이버 SA</span>
+            <div class="card-title">검색광고</div>
+            <div class="card-desc" style="margin-bottom:0;">키워드 세팅 · 소재 작성 · 입찰가 전략</div>
+          </div>
+          <div class="card" class="cp" onclick="showViewByName('gfa')">
+            <span class="badge b-gfa">네이버 GFA</span>
+            <div class="card-title">디스플레이광고</div>
+            <div class="card-desc" style="margin-bottom:0;">타겟 설정 · 소재 제작 · 사이즈 규격</div>
+          </div>
+          <div class="card" class="cp" onclick="showViewByName('google')">
+            <span class="badge b-google">구글 애즈</span>
+            <div class="card-title">구글 검색·유튜브</div>
+            <div class="card-desc" style="margin-bottom:0;">반응형 광고 · 키워드 유형 · 학습기간</div>
+          </div>
+          <div class="card" class="cp" onclick="showViewByName('kakao')">
+            <span class="badge b-kakao">카카오 모먼트</span>
+            <div class="card-title">카카오톡 광고</div>
+            <div class="card-desc" style="margin-bottom:0;">오디언스 타겟 · 이미지 소재 등록</div>
+          </div>
+          <div class="card" class="cp" onclick="showViewByName('meta')">
+            <span class="badge b-meta">메타 광고</span>
+            <div class="card-title">페이스북·인스타</div>
+            <div class="card-desc" style="margin-bottom:0;">픽셀 설치 · 캠페인 목표 · 학습기간</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="platform-view" id="view-nsa"><div id="view-nsa-inner"></div></div>
+  
+  <div class="platform-view" id="view-gfa"><div id="view-gfa-inner"></div></div>
+  
+  <div class="platform-view" id="view-google"><div id="view-google-inner"></div></div>
+  
+  <div class="platform-view" id="view-kakao"><div id="view-kakao-inner"></div></div>
+  
+  <div class="platform-view" id="view-meta"><div id="view-meta-inner"></div></div>
+  <!-- ===== BOARD ===== -->
+  <div class="platform-view" id="view-board">
+
+    <!-- LIST VIEW -->
+    <div id="board-list-view" class="board-wrap">
+      <div class="board-top">
+        <div class="board-title-area">
+          <h2>💬 자유 게시판</h2>
+          <p>광고 운영 팁, 질문, 성과 공유 무엇이든 자유롭게 남겨보세요.</p>
+        </div>
+        <button class="board-write-btn" onclick="openWriteModal()">✏️ 글쓰기</button>
+      </div>
+
+      <div class="board-tabs">
+        <button class="board-tab active" onclick="filterPosts('all',this)">전체</button>
+        <button class="board-tab" onclick="filterPosts('질문',this)">질문</button>
+        <button class="board-tab" onclick="filterPosts('공유',this)">성과 공유</button>
+        <button class="board-tab" onclick="filterPosts('팁',this)">운영 팁</button>
+        <button class="board-tab" onclick="filterPosts('기타',this)">기타</button>
+      </div>
+
+      <div id="post-list" class="post-list">
+        <div class="board-loading">게시글 불러오는 중...</div>
+      </div>
+    </div>
+
+    <!-- DETAIL VIEW -->
+    <div id="board-detail-view" style="display:none;max-width:720px;">
+      <button class="post-back-btn" onclick="showBoardList()">← 목록으로</button>
+      <div id="post-detail-content"></div>
+    </div>
+
+  </div>
+
+  <!-- WRITE MODAL -->
+  <div class="modal-overlay" id="write-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>✏️ 글쓰기</h3>
+        <button class="modal-close" onclick="closeWriteModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">닉네임</label>
+          <input class="form-input" id="post-author" placeholder="닉네임을 입력하세요" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label class="form-label">카테고리</label>
+          <select class="form-select" id="post-category">
+            <option value="질문">질문</option>
+            <option value="공유">성과 공유</option>
+            <option value="팁">운영 팁</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">제목</label>
+          <input class="form-input" id="post-title-input" placeholder="제목을 입력하세요" maxlength="60">
+        </div>
+        <div class="form-group">
+          <label class="form-label">내용</label>
+          <textarea class="form-textarea" id="post-content-input" placeholder="내용을 입력하세요 (최대 1,000자)" maxlength="1000"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeWriteModal()">취소</button>
+        <button class="btn-submit" id="submit-btn" onclick="submitPost()">등록하기</button>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  </div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">애드<span>베이직</span></div>
+      <div class="footer-copy" class="mt4">온라인 광고 실전 가이드 — 무료 공개</div>
+    </div>
+    <div class="footer-links">
+      <span class="footer-link">네이버 SA</span>
+      <span class="footer-link">구글 애즈</span>
+      <span class="footer-link">카카오</span>
+      <span class="footer-link">메타</span>
+    </div>
+    <div class="footer-copy">© 2025 애드베이직. 무료로 자유롭게 이용하세요.</div>
+  </div>
+</footer>
+
+<script>
+
+// ─── LAZY RENDER ───
+
+const _viewCache = {};
+const _origRender = window._lazyRender;
+
+function lazyRender(id) {
+  if (_viewCache[id]) return;
+  const tpl = document.getElementById('tpl-' + id);
+  if (!tpl) return;
+  const inner = document.getElementById('view-' + id + '-inner');
+  if (inner) {
+    requestAnimationFrame(() => {
+      inner.appendChild(tpl.content.cloneNode(true));
+      _viewCache[id] = true;
+      // nsa 뷰 로드 후 계산기 초기화
+      if (id === 'nsa') {
+        requestAnimationFrame(() => calc());
+      }
+    });
+  }
+}
+
+
+// DOM 캐시
+const _views = {};
+const _sidebarItems = [];
+const _topnavLinks = [];
+
+function _initCache() {
+  if (_sidebarItems.length) return;
+  document.querySelectorAll('.sidebar-item').forEach(el => _sidebarItems.push(el));
+  document.querySelectorAll('.topnav-link').forEach(el => _topnavLinks.push(el));
+}
+
+function showView(id, btn) {
+  _initCache();
+  lazyRender(id);
+  // 뷰 전환
+  document.querySelectorAll('.platform-view').forEach(v => v.classList.remove('active'));
+  const viewEl = document.getElementById('view-' + id);
+  if (viewEl) viewEl.classList.add('active');
+  // 네비 활성화
+  _sidebarItems.forEach(n => n.classList.remove('active'));
+  _topnavLinks.forEach(n => n.classList.remove('active'));
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    const pattern = "'" + id + "'";
+    _sidebarItems.forEach(el => { if ((el.getAttribute('onclick')||'').includes(pattern)) el.classList.add('active'); });
+    _topnavLinks.forEach(el => { if ((el.getAttribute('onclick')||'').includes(pattern)) el.classList.add('active'); });
+  }
+  if (id === 'board') { seedIfEmpty(); showBoardList(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showViewByName(id) {
+  const btn = [...document.querySelectorAll('.nav-item')].find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'"));
+  showView(id, btn);
+  if (btn) btn.classList.add('active');
+}
+
+function switchTab(prefix, id, btn) {
+  const container = btn.closest('.chapter');
+  const panels = container.querySelectorAll('.tab-panel');
+  const btns = container.querySelectorAll('.tab-btn');
+  panels.forEach(p => p.classList.remove('active'));
+  btns.forEach(b => b.classList.remove('active'));
+  document.getElementById(prefix + '-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function calc() {
+  var priceEl = document.getElementById('r-price');
+  if (!priceEl) return; // lazy render 전이면 중단
+  var price = parseInt(priceEl.value);
+  var margin = parseInt(document.getElementById('r-margin').value) / 100;
+  var cvr = parseFloat(document.getElementById('r-cvr').value) / 100;
+  var vp = document.getElementById('v-price');
+  var vm = document.getElementById('v-margin');
+  var vc = document.getElementById('v-cvr');
+  var vr = document.getElementById('v-ratio');
+  if (vp) vp.textContent = price.toLocaleString() + '원';
+  if (vm) vm.textContent = Math.round(document.getElementById('r-margin').value) + '%';
+  if (vc) vc.textContent = parseFloat(document.getElementById('r-cvr').value).toFixed(1) + '%';
+  if (vr) vr.textContent = Math.round(document.getElementById('r-ratio').value) + '%';
+  var bep = Math.round(price * margin * cvr);
+  var start = Math.max(Math.round(bep * 0.5), 70);
+  var rb = document.getElementById('r-bep');
+  var rs = document.getElementById('r-start');
+  var rm = document.getElementById('r-max');
+  var rc = document.getElementById('r-cost');
+  if (rb) rb.textContent = bep.toLocaleString() + '원';
+  if (rs) rs.textContent = start.toLocaleString() + '원';
+  if (rm) rm.textContent = bep.toLocaleString() + '원';
+  if (rc) rc.textContent = (start * 100).toLocaleString() + '원';
+}
+// calc()는 슬라이더가 lazy render된 후에만 실행 — 즉시 실행 제거
+</script>
+
+<script>
+// ─── BOARD ───
+const STORAGE_KEY = 'adbasic_posts';
+
+function getPosts() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch { return []; }
+}
+
+function savePosts(posts) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+}
+
+function timeAgo(ts) {
+  const diff = (Date.now() - ts) / 1000;
+  if (diff < 60) return '방금 전';
+  if (diff < 3600) return Math.floor(diff/60) + '분 전';
+  if (diff < 86400) return Math.floor(diff/3600) + '시간 전';
+  if (diff < 604800) return Math.floor(diff/86400) + '일 전';
+  return new Date(ts).toLocaleDateString('ko-KR');
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+let currentFilter = 'all';
+
+function filterPosts(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.board-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderPostList();
+}
+
+function renderPostList() {
+  const posts = getPosts();
+  const filtered = currentFilter === 'all' ? posts : posts.filter(p => p.category === currentFilter);
+  const el = document.getElementById('post-list');
+  if (!el) return;
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="board-empty"><div class="board-empty-icon">📝</div><div class="board-empty-text">아직 게시글이 없어요.<br>첫 번째 글을 남겨보세요!</div></div>';
+    return;
+  }
+  el.innerHTML = filtered.slice().reverse().map(p => `
+    <div class="post-item" onclick="openPost('${p.id}')">
+      <div class="post-item-top">
+        <span class="post-category">${escapeHtml(p.category)}</span>
+        <span class="post-title">${escapeHtml(p.title)}</span>
+      </div>
+      <div class="post-preview">${escapeHtml(p.content)}</div>
+      <div class="post-meta">
+        <span class="post-meta-item">✍️ ${escapeHtml(p.author)}</span>
+        <span class="post-meta-item">🕒 ${timeAgo(p.ts)}</span>
+        <span class="post-meta-item">💬 ${(p.comments||[]).length}</span>
+        <span class="post-meta-item">👁️ ${p.views||0}</span>
+        <span class="post-meta-item">❤️ ${p.likes||0}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openPost(id) {
+  const posts = getPosts();
+  const idx = posts.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  posts[idx].views = (posts[idx].views || 0) + 1;
+  savePosts(posts);
+  const p = posts[idx];
+
+  document.getElementById('board-list-view').style.display = 'none';
+  document.getElementById('board-detail-view').style.display = 'block';
+
+  const liked = JSON.parse(localStorage.getItem('liked_'+id)||'false');
+  const comments = (p.comments||[]).map(c => `
+    <div class="comment-item">
+      <div><span class="comment-author">${escapeHtml(c.author)}</span><span class="comment-time">${timeAgo(c.ts)}</span></div>
+      <div class="comment-body">${escapeHtml(c.content)}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('post-detail-content').innerHTML = `
+    <div class="post-detail">
+      <div class="post-detail-header">
+        <span class="post-detail-cat">${escapeHtml(p.category)}</span>
+        <div class="post-detail-title">${escapeHtml(p.title)}</div>
+        <div class="post-detail-meta">✍️ ${escapeHtml(p.author)} &nbsp;·&nbsp; 🕒 ${timeAgo(p.ts)} &nbsp;·&nbsp; 👁️ ${p.views}회</div>
+      </div>
+      <div class="post-detail-body">${escapeHtml(p.content)}</div>
+      <div class="mb20">
+        <button class="like-btn ${liked?'liked':''}" id="like-btn-${id}" onclick="toggleLike('${id}')">
+          ❤️ 좋아요 <span id="like-count-${id}">${p.likes||0}</span>
+        </button>
+      </div>
+      <div class="comment-section">
+        <div class="comment-section-title">댓글 ${(p.comments||[]).length}개</div>
+        <div class="comment-list" id="comment-list-${id}">${comments || '<div style="color:#94a3b8;font-size:13px;">아직 댓글이 없어요.</div>'}</div>
+        <div class="comment-form">
+          <input class="comment-input" id="comment-author-${id}" placeholder="닉네임" style="max-width:100px;">
+          <input class="comment-input" id="comment-content-${id}" placeholder="댓글을 입력하세요" style="flex:1;">
+          <button class="comment-submit" onclick="submitComment('${id}')">등록</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleLike(id) {
+  const key = 'liked_' + id;
+  const liked = JSON.parse(localStorage.getItem(key)||'false');
+  const posts = getPosts();
+  const idx = posts.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  posts[idx].likes = (posts[idx].likes || 0) + (liked ? -1 : 1);
+  savePosts(posts);
+  localStorage.setItem(key, JSON.stringify(!liked));
+  const btn = document.getElementById('like-btn-'+id);
+  const cnt = document.getElementById('like-count-'+id);
+  if (btn) btn.classList.toggle('liked', !liked);
+  if (cnt) cnt.textContent = posts[idx].likes;
+}
+
+function submitComment(postId) {
+  const author = document.getElementById('comment-author-'+postId)?.value.trim();
+  const content = document.getElementById('comment-content-'+postId)?.value.trim();
+  if (!author) { alert('닉네임을 입력해주세요.'); return; }
+  if (!content) { alert('댓글 내용을 입력해주세요.'); return; }
+  const posts = getPosts();
+  const idx = posts.findIndex(p => p.id === postId);
+  if (idx < 0) return;
+  if (!posts[idx].comments) posts[idx].comments = [];
+  posts[idx].comments.push({ id: Date.now().toString(), author, content, ts: Date.now() });
+  savePosts(posts);
+  openPost(postId);
+}
+
+function showBoardList() {
+  document.getElementById('board-list-view').style.display = 'block';
+  document.getElementById('board-detail-view').style.display = 'none';
+  renderPostList();
+}
+
+function openWriteModal() {
+  document.getElementById('write-modal').classList.add('open');
+  document.getElementById('post-author').focus();
+}
+
+function closeWriteModal() {
+  document.getElementById('write-modal').classList.remove('open');
+}
+
+function submitPost() {
+  const author = document.getElementById('post-author').value.trim();
+  const category = document.getElementById('post-category').value;
+  const title = document.getElementById('post-title-input').value.trim();
+  const content = document.getElementById('post-content-input').value.trim();
+  if (!author) { alert('닉네임을 입력해주세요.'); return; }
+  if (!title) { alert('제목을 입력해주세요.'); return; }
+  if (!content) { alert('내용을 입력해주세요.'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = '등록 중...';
+
+  const post = {
+    id: Date.now().toString() + Math.random().toString(36).slice(2,6),
+    author, category, title, content,
+    ts: Date.now(), likes: 0, views: 0, comments: []
+  };
+
+  const posts = getPosts();
+  posts.push(post);
+  savePosts(posts);
+
+  btn.disabled = false; btn.textContent = '등록하기';
+  closeWriteModal();
+  document.getElementById('post-author').value = '';
+  document.getElementById('post-title-input').value = '';
+  document.getElementById('post-content-input').value = '';
+  renderPostList();
+}
+
+// close modal on overlay click
+document.getElementById('write-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeWriteModal();
+});
+
+// seed sample posts if empty
+function seedIfEmpty() {
+  if (getPosts().length > 0) return;
+  const samples = [
+    { id:'s1', author:'마케터김', category:'팁', title:'네이버 SA 입찰가 낮추는 꿀팁 공유해요', content:'처음엔 예상 입찰가의 50%로 시작하고 1주일 데이터 보고 올리면 예산 낭비가 훨씬 줄어요. 특히 세부 키워드 위주로 시작하면 CPC가 확실히 낮게 유지됩니다.', ts: Date.now()-86400000*2, likes:7, views:43, comments:[{id:'c1',author:'광고초보',content:'정말 도움됐어요! 저도 따라해볼게요 😊',ts:Date.now()-86400000}] },
+    { id:'s2', author:'프랜차이즈담당자', category:'질문', title:'GFA 소재 반려가 계속 나는데 이유를 모르겠어요', content:'이미지 텍스트 20% 넘지도 않고 전화번호도 없는데 계속 반려가 납니다. 혹시 같은 경험 있으신 분 있나요?', ts: Date.now()-86400000, likes:3, views:28, comments:[{id:'c2',author:'GFA고수',content:'혹시 이미지 안에 "최저가" 같은 표현 있지 않나요? 그것도 반려 사유가 됩니다!',ts:Date.now()-3600000*5}] },
+    { id:'s3', author:'카페사장', category:'공유', title:'메타 광고 2달 운영 후기 — ROAS 3.8 달성했어요!', content:'처음 한 달은 학습기간이라 ROAS 1.5도 안 나왔는데 소재를 릴스로 바꾸고 타겟을 좀 더 넓혔더니 확 올랐어요. 학습기간에 포기하지 않는 게 중요한 것 같아요.', ts: Date.now()-3600000*5, likes:14, views:92, comments:[] },
+  ];
+  savePosts(samples);
+}
+
+// board init: showView에 통합됨
+</script>
+
+<!-- LAZY TEMPLATES -->
+<template id="tpl-nsa"><!-- ===== 네이버 SA ===== -->
+  <div class="platform-view" id="view-nsa">
+    <div class="platform-header" style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+      <div class="platform-header-left">
+        <span class="badge b-nsa">네이버 검색광고 (SA)</span>
+        <div class="platform-name">네이버 SA</div>
+        <div class="platform-desc">키워드 검색 시 결과 상단에 노출. 클릭당 과금(CPC) 방식으로 구매 의도가 높은 사용자에게 닿을 수 있어 소상공인에게 가장 효과적인 매체입니다.</div>
+        <div class="platform-meta">
+          <span class="meta-chip">searchad.naver.com</span>
+          <span class="meta-chip">CPC 과금</span>
+          <span class="meta-chip">최소 70원~</span>
+          <span class="meta-chip">검수 1~2시간</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 세팅 -->
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 01</span><span class="chapter-title">기초 세팅 방법</span></div>
+      <div class="card">
+        <div class="step-list">
+          <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">광고주 계정 만들기</div><div class="step-desc">searchad.naver.com 접속 → 회원가입 → 사업자 유형 선택 → 사업자등록번호 입력 후 인증</div>
+            <div class="mockup-simple"><span class="ms-url">🌐 searchad.naver.com/join</span><span class="ms-section">광고주 유형 선택</span><span class="ms-field">✏ 123-45-67890</span><span class="ms-field">✏ 홍길동</span><span class="ms-option">✓ ✓ 사업자</span></div>
+            <div class="callout"><div class="callout-num">!</div><span>네이버 로그인과 별개 — searchad.naver.com에서 광고 전용 계정을 따로 만들어야 합니다</span></div></div>
+            <div class="tip"><strong>체크:</strong> 네이버 아이디가 있어도 광고 시스템은 별도 가입이 필요합니다.</div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">캠페인 생성</div><div class="step-desc">캠페인 만들기 → 파워링크 선택 → 캠페인 이름 입력 → 일예산 설정 (처음엔 3~5만원 추천)</div>
+            <div class="mockup-simple"><span class="ms-url">🌐 searchad.naver.com/campaign/create</span><span class="ms-section">캠페인 유형 선택</span><span class="ms-field">✏ 브랜드명_SA_2025</span><span class="ms-field">✏ 30,000</span><span class="ms-option">✓ ✓ 파워링크</span><span class="ms-tip">→ 파워링크 선택 필수 — 다른 유형 선택 시 검색 결과에 미노출</span></div></div></div>
+            <div class="step-note"><strong>캠페인 구조:</strong> 캠페인(예산 단위) → 광고그룹(테마 단위) → 키워드/소재</div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">광고그룹 설정</div><div class="step-desc">광고그룹 이름 입력 → 매체: PC/모바일 전체 → 클릭 시 이동할 URL 입력</div>
+            <div class="mockup-simple"><span class="ms-field">✏ 치킨_강남_그룹1</span><span class="ms-field">✏ https://mystore.com</span><span class="ms-option">✓ ✓ PC</span><span class="ms-option">✓ ✓ 모바일</span><span class="ms-tip">→ PC/모바일 전체 선택 — 초기엔 기기별 입찰가 조정 불필요</span></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">키워드 등록</div><div class="step-desc">키워드 도구 탭에서 업종 관련 단어 검색 → 월간 검색수·경쟁도 확인 → 그룹당 10~20개 권장</div>
+            <div class="mockup-simple"><span class="ms-section">키워드 도구</span><span class="ms-field">✏ 강남 치킨</span><span class="ms-tip">→ 초보자는 경쟁도 낮음·중간 키워드 위주로 선택 추천</span></div></div></div>
+            <div class="step-note"><strong>키워드 구분</strong><br>• 대표 키워드: "강남 치킨" — 검색량 많지만 단가 높음<br>• 세부 키워드: "강남역 치킨 배달" — 전환율 높음</div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">5</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">광고 소재 작성</div><div class="step-desc">제목1 (15자) / 제목2 (15자) / 설명문 (45자) 입력</div>
+            <div class="mockup-simple"><span class="ms-section">광고 미리보기</span><span class="ms-field">✏ 강남 바삭치킨 전문점</span><span class="ms-field">✏ 당일 주문 당일 배달</span><span class="ms-field">✏ 국내산 생닭 사용 | 주문 후 20분 내 배달 | 강남 전지역 가능</span><span class="ms-tip">→ 가격(원), 전화번호 직접 기재 금지 — 검수 반려 원인 1위</span></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">6</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">검수 요청 후 집행</div><div class="step-desc">광고 미리보기 확인 → 검수 요청 → 1~2시간 후 자동 집행 시작</div>
+            <div class="mockup-simple"><div class="ms-tip">→ 승인 후 자동 집행 시작 (보통 1~2시간 이내)</div></div></div></div>
+            <div class="warn"><strong>주의:</strong> 전화번호, 가격 정보는 소재 내 직접 기재 불가. 위반 시 반려됩니다.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="chapter-divider">
+
+    <!-- 입찰가 -->
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 02 · 심화</span><span class="chapter-title">키워드 입찰가 전략</span></div>
+
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('nsa-bid','concept',this)">개념</button>
+        <button class="tab-btn" onclick="switchTab('nsa-bid','calc',this)">적정가 계산기</button>
+        <button class="tab-btn" onclick="switchTab('nsa-bid','market',this)">업종별 시세</button>
+        <button class="tab-btn" onclick="switchTab('nsa-bid','strategy',this)">운영 전략</button>
+      </div>
+
+      <div class="tab-panel active" id="nsa-bid-concept">
+        <div class="card">
+          <div class="card-title">입찰가 기본 개념</div>
+          <div class="card-desc">내 광고가 클릭 1번 받을 때 최대 얼마까지 낼 의향이 있는지 설정하는 금액입니다. 실제로는 2위 입찰가 + 10원만 과금됩니다.</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">내가 500원, 경쟁자가 300원 입찰</div><div class="step-desc">내가 1위 → 실제 과금은 300 + 10 = <strong style="color:#16a34a">310원</strong>만 나감</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">입찰가 × 품질지수 = 광고 순위</div><div class="step-desc">소재 클릭률(QS)이 높으면 낮은 입찰가로도 상위 노출 가능합니다.</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">최소 입찰가는 70원</div><div class="step-desc">경쟁이 낮은 세부 키워드는 70~200원으로도 상위 노출 가능합니다.</div></div></div>
+          </div>
+          <div class="tip"><strong>핵심:</strong> 처음엔 낮게 시작해서 실제 CPC 데이터를 보며 조정하세요.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="nsa-bid-calc">
+        <div class="card">
+          <div class="card-title">적정 입찰가 계산기</div>
+          <div class="card-desc">업종 수치를 입력하면 손익분기 CPC를 계산해드려요.</div>
+          <div class="calc-row">
+            <div class="calc-item"><label>객단가</label><input type="range" id="r-price" min="10000" max="500000" step="5000" value="50000" oninput="calc()"><span class="val" id="v-price">50,000원</span></div>
+            <div class="calc-item"><label>마진율</label><input type="range" id="r-margin" min="5" max="80" step="5" value="30" oninput="calc()"><span class="val" id="v-margin">30%</span></div>
+            <div class="calc-item"><label>전환율</label><input type="range" id="r-cvr" min="0.5" max="10" step="0.5" value="2" oninput="calc()"><span class="val" id="v-cvr">2.0%</span></div>
+            <div class="calc-item"><label>광고비 비중</label><input type="range" id="r-ratio" min="5" max="50" step="5" value="20" oninput="calc()"><span class="val" id="v-ratio">20%</span></div>
+          </div>
+          <div class="result-grid">
+            <div class="result-cell"><div class="lbl">손익분기 CPC</div><div class="rval white" id="r-bep">300원</div></div>
+            <div class="result-cell"><div class="lbl">추천 시작 입찰가</div><div class="rval green" id="r-start">150원</div></div>
+            <div class="result-cell"><div class="lbl">최대 허용 CPC</div><div class="rval yellow" id="r-max">300원</div></div>
+            <div class="result-cell"><div class="lbl">100클릭 예상 비용</div><div class="rval white" id="r-cost">15,000원</div></div>
+          </div>
+          <div class="tip" class="mt12"><strong>사용법:</strong> 추천 시작가로 집행 후 실제 CPC가 손익분기 이하면 유지, 초과하면 키워드 정리 또는 입찰가 낮추기.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="nsa-bid-market">
+        <div class="card">
+          <div class="card-title">업종별 평균 CPC 시세</div>
+          <div class="card-desc">실제 운영 기준 참고 시세입니다. 경쟁도·시즌에 따라 달라집니다.</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>업종</th><th>대표 키워드</th><th>세부 키워드</th><th>경쟁도</th></tr></thead>
+              <tbody>
+                <tr><td>성형·피부과</td><td>3,000~15,000원</td><td>500~2,000원</td><td><span class="tag-high">매우 높음</span></td></tr>
+                <tr><td>법률·법무</td><td>2,000~10,000원</td><td>500~2,000원</td><td><span class="tag-high">매우 높음</span></td></tr>
+                <tr><td>부동산·인테리어</td><td>1,000~5,000원</td><td>300~1,000원</td><td><span class="tag-high">높음</span></td></tr>
+                <tr><td>교육·학원</td><td>500~3,000원</td><td>200~800원</td><td><span class="tag-mid">중간</span></td></tr>
+                <tr><td>프랜차이즈 창업</td><td>1,000~5,000원</td><td>300~1,000원</td><td><span class="tag-mid">중간</span></td></tr>
+                <tr><td>헬스·PT</td><td>300~1,500원</td><td>100~400원</td><td><span class="tag-mid">중간</span></td></tr>
+                <tr><td>F&B (음식점)</td><td>200~1,000원</td><td>70~300원</td><td><span class="tag-low">낮음</span></td></tr>
+                <tr><td>이커머스</td><td>300~1,500원</td><td>70~400원</td><td><span class="tag-low">낮음</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="warn"><strong>주의:</strong> 실제 입찰가는 네이버 SA 키워드 도구 → 예상 입찰가 탭에서 직접 확인하세요.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="nsa-bid-strategy">
+        <div class="card">
+          <div class="card-title">단계별 운영 전략</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">처음 1~2주: 낮게 시작</div><div class="step-desc">예상 입찰가의 50~60%로 시작. 일단 클릭 데이터를 모으는 단계입니다.</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">2~4주: 키워드 분류</div><div class="step-desc">전환 있는 키워드 → 입찰가 올리기 / 클릭만 있는 키워드 → 소재 수정 / 클릭 없는 키워드 → 중지</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">한 달 후: 성과 키워드 집중</div><div class="step-desc">전환 키워드 3~5위 유지 목표. 1위를 고집할 필요 없어요 — 3위도 충분하고 단가가 저렴합니다.</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">수동 입찰 추천</div><div class="step-desc">자동 입찰은 편하지만 예산 초과 위험. 초보자는 수동 입찰 + 일예산 상한 조합을 추천합니다.</div></div></div>
+          </div>
+          <div class="good"><strong>핵심:</strong> 입찰가 올리기 전에 소재 품질(QS)을 먼저 개선하세요. 클릭률이 높으면 같은 입찰가로도 더 상위에 노출됩니다.</div>
+        </div>
+      </div>
+    </div>
+  </div></template>
+<template id="tpl-gfa"><!-- ===== 네이버 GFA ===== -->
+  <div class="platform-view" id="view-gfa">
+    <div class="platform-header" style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+      <div class="platform-header-left">
+        <span class="badge b-gfa">네이버 GFA (디스플레이)</span>
+        <div class="platform-name">네이버 GFA</div>
+        <div class="platform-desc">네이버 메인, 뉴스, 블로그, 카페 등 전 지면에 이미지·배너로 노출됩니다. 검색 없이도 노출되어 브랜드 인지도 확산에 효과적입니다.</div>
+        <div class="platform-meta">
+          <span class="meta-chip">gfa.naver.com</span>
+          <span class="meta-chip">CPM / CPC 선택</span>
+          <span class="meta-chip">일 1만원~</span>
+          <span class="meta-chip">검수 최대 1영업일</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 세팅 -->
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 01</span><span class="chapter-title">기초 세팅 방법</span></div>
+      <div class="card">
+        <div class="step-list">
+          <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">GFA 계정 접속</div><div class="step-desc">gfa.naver.com → 네이버 아이디로 로그인 → 광고주 계정 생성 (SA 계정과 별개)</div>
+            <div class="mockup-simple"><span class="ms-url">🌐 gfa.naver.com</span><span class="ms-tip">→ SA(searchad) 계정과 완전히 별개 — gfa.naver.com에서 새로 계정 생성</span></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">캠페인 생성</div><div class="step-desc">캠페인 만들기 → 목표: 전환 / 트래픽 / 도달 중 택 1 → 예산 설정</div>
+            <div class="mockup-simple"><div class="ms-section">캠페인 목표</div><div class="ms-option">✓ ✓ 트래픽초기 추천</div></div><div class="mockup-label">캠페인 이름</div><div class="mockup-field focus">브랜드_GFA_2025</div><div class="mockup-label">일 예산</div><div style="display:flex;gap:4px;align-items:center;"><div class="mockup-field focus" style="width:80px;margin-bottom:0;">20,000</div><span class="fs10-muted">원 (최소 1만원~)</span></div><div class="callout"><div class="callout-num">→</div><span>처음엔 트래픽 목표로 시작 → 데이터 쌓인 후 전환으로 변경</span></div></div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">광고 세트 (타겟) 설정</div><div class="step-desc">성별 / 연령대 / 지역 / 관심사 타겟 설정 → 기기: 모바일 우선 추천</div>
+            <div class="mockup-simple"><div class="ms-section">타겟 설정</div><div class="ms-option">✓ ✓ 여성</div></div><div class="mockup-label" class="mt6">연령</div><div class="mockup-option-row"><div class="mockup-option">20대</div><div class="mockup-option selected">✓ 30대</div><div class="mockup-option selected">✓ 40대</div></div></div><div style="flex:1;min-width:120px;"><div class="mockup-label">지역</div><div class="mockup-field focus" style="height:36px;">강남구, 서초구, 송파구</div><div class="mockup-label" class="mt6">관심사</div><div class="mockup-field focus">뷰티·피부관리</div></div></div><div class="mockup-label" class="mt6">기기</div><div class="mockup-option-row"><div class="mockup-option selected">✓ 모바일</div><div class="mockup-option">PC</div></div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">소재 등록</div><div class="step-desc">이미지 업로드 → 권장: 1029×258px (피드), 300×250px (박스) → 제목(25자)·설명(45자) 입력 → 랜딩 URL</div>
+            <div class="mockup-simple"><div class="ms-section">소재 등록</div><div class="ms-field">✏️ 피부 고민, 상담부터 시작하세요</div><div class="ms-field">✏️ 초진 상담 무료 | 전문의 직접 진료 | 강남 피부과</div><div class="ms-field">✏️ https://myclinic.com</div><div class="ms-tip">→ 이미지 내 텍스트 20% 초과 시 반려 — 가격·전화번호 이미지에 넣지 말 것</div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">5</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">검수 제출 및 집행</div><div class="step-desc">소재 저장 → 자동 검수 (최대 1영업일) → 승인 후 집행 시작</div>
+            <div class="mockup-simple"><div class="ms-tip">→ 승인 완료 시 상태가 "집행 중"으로 자동 전환됩니다</div></div></div></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="chapter-divider">
+
+    <!-- GFA 소재 심화 -->
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 02 · 심화</span><span class="chapter-title">소재 제작 가이드</span></div>
+
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('gfa-cre','size',this)">사이즈 & 규격</button>
+        <button class="tab-btn" onclick="switchTab('gfa-cre','rule',this)">소재 규정</button>
+        <button class="tab-btn" onclick="switchTab('gfa-cre','copy',this)">문구 작성법</button>
+        <button class="tab-btn" onclick="switchTab('gfa-cre','tool',this)">제작 도구</button>
+      </div>
+
+      <div class="tab-panel active" id="gfa-cre-size">
+        <div class="card">
+          <div class="card-title">필수 이미지 사이즈</div>
+          <div class="size-grid">
+            <div class="size-card"><div class="size-name">피드 배너</div><div class="size-px">1029 × 258 px</div><span class="size-tag">가장 많이 쓰임</span></div>
+            <div class="size-card"><div class="size-name">박스 배너</div><div class="size-px">300 × 250 px</div><span class="size-tag">PC 사이드바</span></div>
+            <div class="size-card"><div class="size-name">스마트채널</div><div class="size-px">800 × 120 px</div><span class="size-tag">카페·블로그 상단</span></div>
+            <div class="size-card"><div class="size-name">네이티브</div><div class="size-px">1200 × 627 px</div><span class="size-tag">뉴스피드형</span></div>
+            <div class="size-card"><div class="size-name">모바일 전면</div><div class="size-px">640 × 1136 px</div><span class="size-tag">앱 전면</span></div>
+          </div>
+          <div class="tip" class="mt12"><strong>파일 규격:</strong> JPG 또는 PNG / 2MB 이하 / RGB 색상 모드</div>
+        </div>
+        <div class="card">
+          <div class="card-title">배너 구조 미리보기</div>
+          <div class="preview-wrap">
+            <div class="preview-label">피드 배너형 (1029×258)</div>
+            <div class="banner-wide"><div class="img-z">이미지</div><div class="txt-z"><div class="t">강남 바삭치킨 전문점</div><div class="d">국내산 생닭 | 주문 후 20분 배달</div></div><div class="btn-z"><span>자세히 보기</span></div></div>
+            <div class="preview-label" class="mt10">박스 배너형 (300×250)</div>
+            <div class="banner-box"><div class="img-z">이미지</div><div class="txt-z"><div class="ttl">강남 바삭치킨</div><div class="dsc">20분 배달 가능</div><div class="btn">자세히 보기</div></div></div>
+          </div>
+          <div class="tip"><strong>구조 이해:</strong> GFA는 이미지 + 제목 + 설명 + 버튼을 따로 입력합니다. 이미지 안에 텍스트는 20% 이하만.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="gfa-cre-rule">
+        <div class="card">
+          <div class="card-title">반드시 지켜야 할 규정</div>
+          <div class="rule-list">
+            <div class="rule-item"><div class="rule-icon" style="color:#dc2626">✕</div><div><div class="rule-title">이미지 내 텍스트 20% 초과 금지</div><div class="rule-sub">제목·설명은 시스템 텍스트 필드에 입력하세요.</div></div></div>
+            <div class="rule-item"><div class="rule-icon" style="color:#dc2626">✕</div><div><div class="rule-title">가격·전화번호 직접 기재 불가</div><div class="rule-sub">"2만원", "010-XXXX-XXXX" 형태 직접 노출 금지.</div></div></div>
+            <div class="rule-item"><div class="rule-icon" style="color:#dc2626">✕</div><div><div class="rule-title">"최저가", "1위", "No.1" 등 최상급 표현 금지</div><div class="rule-sub">객관적 증빙 없는 최상급 표현 불가. "합리적인 가격" 등으로 우회.</div></div></div>
+            <div class="rule-item"><div class="rule-icon" style="color:#dc2626">✕</div><div><div class="rule-title">전·후 비교 이미지 제한 (의료·뷰티)</div><div class="rule-sub">피부과, 성형, 다이어트 업종의 시술 전후 비교 이미지 불가.</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">잘 통과되는 소재 조건</div>
+          <div class="rule-list">
+            <div class="rule-item"><div class="rule-icon" style="color:#16a34a">✓</div><div><div class="rule-title">실제 제품·공간 사진 사용</div><div class="rule-sub">실사 이미지가 일러스트보다 CTR 평균 30% 이상 높습니다.</div></div></div>
+            <div class="rule-item"><div class="rule-icon" style="color:#16a34a">✓</div><div><div class="rule-title">밝고 선명한 배경</div><div class="rule-sub">흰색 또는 밝은 단색 배경이 피드에서 잘 눈에 띕니다.</div></div></div>
+            <div class="rule-item"><div class="rule-icon" style="color:#16a34a">✓</div><div><div class="rule-title">핵심 이미지는 중앙 배치</div><div class="rule-sub">지면마다 크롭 방식이 달라 중요 요소가 잘리지 않도록.</div></div></div>
+            <div class="rule-item"><div class="rule-icon" style="color:#16a34a">✓</div><div><div class="rule-title">소재 2~3개 동시 등록</div><div class="rule-sub">GFA가 성과 좋은 소재를 자동으로 더 많이 노출합니다.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="gfa-cre-copy">
+        <div class="card">
+          <div class="card-title">입력 항목별 글자 수</div>
+          <div class="size-grid">
+            <div class="size-card"><div class="size-name">제목</div><div class="size-px">최대 25자</div><span class="size-tag">핵심 혜택 1개</span></div>
+            <div class="size-card"><div class="size-name">설명</div><div class="size-px">최대 45자</div><span class="size-tag">부가 정보</span></div>
+            <div class="size-card"><div class="size-name">버튼</div><div class="size-px">선택형</div><span class="size-tag">자세히보기 / 구매하기</span></div>
+          </div>
+          <div class="tip" class="mt12"><strong>공식:</strong> 제목 = 핵심 혜택 or 고객 니즈 / 설명 = 신뢰 요소 + 행동 유도</div>
+        </div>
+        <div class="card">
+          <div class="card-title">업종별 문구 예시</div>
+          <div class="copy-item"><div class="copy-lbl">F&B</div><div class="copy-ex">제목: 강남역 맛집, 줄 안 서도 됩니다<br>설명: 웨이팅 없이 예약 가능 | 런치 특선 운영 중</div><div class="copy-bad">❌ "강남 최고 맛집" / "업계 1위"</div></div>
+          <div class="copy-item"><div class="copy-lbl">뷰티 클리닉</div><div class="copy-ex">제목: 피부 고민, 상담부터 시작하세요<br>설명: 초진 상담 무료 | 전문의 직접 진료</div><div class="copy-bad">❌ 시술 전후 비교 / "완벽한 피부 보장"</div></div>
+          <div class="copy-item"><div class="copy-lbl">이커머스</div><div class="copy-ex">제목: 여름 신상 오늘만 특가<br>설명: 당일 출고 | 무료배송 | 30일 무료 반품</div><div class="copy-bad">❌ 가격 직접 기재</div></div>
+          <div class="copy-item"><div class="copy-lbl">교육·학원</div><div class="copy-ex">제목: 영어 회화, 3개월 만에 달라졌어요<br>설명: 원어민 강사 1:1 | 첫 달 50% 할인</div><div class="copy-bad">❌ "합격 보장" / "성적 100% 향상"</div></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="gfa-cre-tool">
+        <div class="card">
+          <div class="card-title">무료 제작 도구</div>
+          <div class="tool-grid">
+            <div class="tool-card"><div class="tool-name">미리캔버스</div><div class="tool-desc">한국어 UI, GFA 배너 템플릿 다수. 사이즈 직접 입력 가능.</div><span class="tool-tag">무료 / 한국어</span></div>
+            <div class="tool-card"><div class="tool-name">Canva</div><div class="tool-desc">템플릿 풍부, 팀 협업 가능. 사이즈 커스텀 입력.</div><span class="tool-tag">무료 플랜 있음</span></div>
+            <div class="tool-card"><div class="tool-name">망고보드</div><div class="tool-desc">국내 특화 소재 많음. 광고 배너 전용 템플릿 제공.</div><span class="tool-tag">월정액 / 한국어</span></div>
+            <div class="tool-card"><div class="tool-name">Adobe Express</div><div class="tool-desc">AI 이미지 생성 포함. 무료 플랜에서도 배너 제작 가능.</div><span class="tool-tag">무료 플랜 있음</span></div>
+          </div>
+          <div class="good" class="mt12"><strong>꿀팁:</strong> 같은 이미지로 사이즈만 바꿔 3~4개 버전을 만들면 다양한 지면에 한번에 등록할 수 있어요.</div>
+        </div>
+      </div>
+    </div>
+  </div></template>
+<template id="tpl-google"><!-- ===== 구글 ===== -->
+  <div class="platform-view" id="view-google">
+    <div class="platform-header" style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+      <div class="platform-header-left">
+        <span class="badge b-google">구글 애즈</span>
+        <div class="platform-name">구글 애즈</div>
+        <div class="platform-desc">구글 검색, 유튜브, GDN에 광고를 노출합니다. 젊은 층과 해외 고객 유입에 유리하며 자동화 기능이 강력합니다.</div>
+        <div class="platform-meta">
+          <span class="meta-chip">ads.google.com</span>
+          <span class="meta-chip">CPC / CPM / CPA</span>
+          <span class="meta-chip">학습기간 7~14일</span>
+        </div>
+      </div>
+    </div>
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 01</span><span class="chapter-title">기초 세팅 방법</span></div>
+      <div class="card">
+        <div class="step-list">
+          <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">계정 생성 — 전문가 모드로 시작</div><div class="step-desc">ads.google.com → 구글 계정 로그인 → 전문가 모드로 전환 → 청구 국가: 대한민국 / 통화: KRW</div>
+            <div class="mockup-simple"><span class="ms-url">🌐 ads.google.com</span><span class="ms-option">✓ ✓ 전문가 모드</span><span class="ms-tip">→ 반드시 "전문가 모드"로 전환 — 스마트 모드는 세부 조정 불가</span></div></div></div>
+            <div class="warn"><strong>중요:</strong> 처음 가입 시 스마트 캠페인을 자동 유도합니다. 건너뛰고 전문가 모드에서 직접 만드세요.</div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">캠페인 생성</div><div class="step-desc">+ 새 캠페인 → 목표: 웹사이트 트래픽 또는 리드 → 유형: 검색 → 입찰 전략: 클릭수 최대화</div>
+            <div class="mockup-simple"><div class="ms-section">캠페인 목표 선택</div><div class="ms-option">✓ ✓ 웹사이트 트래픽</div></div><div class="mockup-section-title" class="mt8">캠페인 유형</div><div class="mockup-option-row"><div class="mockup-option selected" style="border-color:#4285f4;color:#4285f4;">✓ 검색</div><div class="mockup-option">디스플레이</div><div class="mockup-option">쇼핑</div><div class="mockup-option">동영상</div></div><div class="mockup-section-title" class="mt8">입찰 전략</div><div class="mockup-option-row"><div class="mockup-option selected">✓ 클릭수 최대화 (초기 추천)</div><div class="mockup-option">목표 CPA</div></div><div class="callout"><div class="callout-num">→</div><span>초기엔 "클릭수 최대화" — 전환 30건 쌓인 후 목표 CPA로 전환</span></div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">예산 및 타겟 설정</div><div class="step-desc">일예산 입력 → 지역: 시/구 단위 → 언어: 한국어 → 광고 시간대: 영업 시간만</div>
+            <div class="mockup-simple"><div class="ms-field">✏️ 30,000</div><div class="ms-field">✏️ 서울특별시 강남구, 서초구</div><div class="ms-field">✏️ 한국어</div></div><div class="callout"><div class="callout-num">→</div><span>평일 영업시간만 설정 — 새벽 클릭은 전환율 낮고 예산 낭비</span></div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">키워드 설정 — 검색 유형 주의</div><div class="step-desc">광고그룹 생성 → 키워드 입력 → 검색 유형 선택</div>
+            <div class="mockup-simple"><div class="ms-section">키워드 추가</div><div class="ms-field">✏️ "강남 임플란트"</div><div class="ms-tip">→ 구문 일치("") 위주로 시작 — 광범위는 제외 키워드 없으면 낭비</div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">5</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">반응형 검색 광고 작성</div><div class="step-desc">최종 URL → 제목 최대 15개(각 30자) / 설명 최대 4개(각 90자) → 구글이 자동 조합</div>
+            <div class="mockup-simple"><div class="ms-section">반응형 검색 광고</div><div class="ms-field">✏️ https://myclinic.com/implant</div><div class="ms-field">✏️ 강남 임플란트 당일 상담</div><div class="ms-field">✏️ 부담 없는 가격으로 건강한 치아</div><div class="ms-field">✏️ 강남역 3분 거리 | 임플란트 전문 의료진 | 당일 예약 가능 | 초진 상담 무료</div><div class="ms-tip">→ 제목에 키워드 직접 포함 시 굵게 강조 표시 → CTR 상승</div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">6</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">결제 등록 후 게시</div><div class="step-desc">신용카드 등록 → 광고 게시 → 검수 후 자동 집행 (통상 1~2 영업일)</div>
+            <div class="mockup-simple"><div class="ms-tip">→ 학습기간 7~14일 — 이 기간엔 예산·소재·타겟 수정 최소화</div></div></div></div>
+            <div class="tip"><strong>학습 기간:</strong> 집행 후 7~14일은 성과가 들쭉날쭉합니다. 이 기간엔 크게 손대지 마세요.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="chapter-divider">
+
+    <!-- 제외 키워드 심화 -->
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 02 · 심화</span><span class="chapter-title">제외 키워드 (부정 키워드) 설정</span></div>
+
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('gnk','concept',this)">개념 & 필요성</button>
+        <button class="tab-btn" onclick="switchTab('gnk','how',this)">설정 방법</button>
+        <button class="tab-btn" onclick="switchTab('gnk','list',this)">업종별 예시 목록</button>
+        <button class="tab-btn" onclick="switchTab('gnk','tip',this)">운영 팁</button>
+      </div>
+
+      <!-- 개념 -->
+      <div class="tab-panel active" id="gnk-concept">
+        <div class="card">
+          <div class="card-title">제외 키워드란?</div>
+          <div class="card-desc">내 광고가 노출되면 안 되는 검색어를 지정하는 기능입니다. 예를 들어 유료 서비스를 광고하는데 "무료"를 검색한 사람에게는 광고가 뜨지 않도록 막을 수 있어요.</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">!</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">왜 중요한가?</div><div class="step-desc">구글 확장 일치·구문 일치는 의도치 않은 검색어에도 광고가 노출됩니다. 제외 키워드를 안 쓰면 관련 없는 클릭에 예산이 낭비돼요.</div><div class="step-note"><strong>예시 — 강남 치킨 광고 집행 중</strong><br>실제 유입된 검색어: "치킨 레시피", "치킨 만들기", "치킨 게임"<br>→ 구매 의도 없는 클릭 → 비용 낭비<br>→ 이 단어들을 제외 키워드로 등록하면 차단 가능</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">!</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">제외 키워드 유형</div><div class="step-desc">일반 키워드와 동일하게 3가지 유형이 있습니다.</div><div class="step-note">• [완전 일치 제외]: [무료] → "무료 치킨"은 차단, "치킨 무료 쿠폰"은 통과<br>• "구문 일치 제외": "무료" → "무료"가 포함된 검색어 전체 차단<br>• 일반(광범위) 제외: 무료 → 무료 관련 유사어까지 차단<br><br>→ 초보자는 <strong>구문 일치 제외</strong> 위주로 사용 추천</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 설정 방법 -->
+      <div class="tab-panel" id="gnk-how">
+        <div class="card">
+          <div class="card-title">설정 방법 — 3가지 경로</div>
+
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">A</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">방법 1 — 키워드 탭에서 직접 추가 (가장 쉬움)</div>
+              <div class="step-desc">구글 애즈 → 캠페인 선택 → 왼쪽 메뉴 <strong>키워드</strong> → 상단 탭에서 <strong>제외 키워드</strong> 클릭 → <strong>+ 제외 키워드</strong> → 단어 입력 후 저장</div>
+              <div class="step-note">적용 범위 선택 가능<br>• 광고그룹 수준: 특정 광고그룹에만 적용<br>• 캠페인 수준: 캠페인 전체에 적용 (보통 이걸 추천)</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">B</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">방법 2 — 검색어 보고서에서 추가 (가장 실용적)</div>
+              <div class="step-desc">캠페인 → <strong>인사이트 및 보고서</strong> → <strong>검색어</strong> → 실제로 광고가 노출된 검색어 목록 확인 → 불필요한 검색어 체크 → <strong>제외 키워드로 추가</strong></div>
+              <div class="good"><strong>핵심 습관:</strong> 광고 시작 후 3~7일마다 검색어 보고서를 확인해 낭비 키워드를 제외 등록하세요. 이게 가장 효과적인 최적화 방법입니다.</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">C</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">방법 3 — 제외 키워드 목록 만들기 (여러 캠페인에 공통 적용)</div>
+              <div class="step-desc">도구 및 설정 → <strong>공유 라이브러리</strong> → <strong>제외 키워드 목록</strong> → 새 목록 만들기 → 키워드 대량 입력 → 원하는 캠페인에 적용</div>
+              <div class="tip"><strong>언제 쓰나:</strong> 캠페인이 여러 개일 때 공통으로 막아야 할 단어(무료, 후기, 유튜브 등)를 한번에 관리할 수 있어요.</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 업종별 예시 -->
+      <div class="tab-panel" id="gnk-list">
+        <div class="card">
+          <div class="card-title">업종별 제외 키워드 예시</div>
+          <div class="card-desc">광고 시작 전 아래 목록을 참고해 미리 등록해두세요.</div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="copy-item">
+              <div class="copy-lbl">공통 (모든 업종)</div>
+              <div class="copy-ex" style="font-size:12px;">무료, 공짜, 후기, 리뷰, 디시, 갤러리, 나무위키, 유튜브, 채용, 알바, 취업, 급여, 연봉, 자격증, 자격, 학원비, 교재, 만들기, 레시피, 방법, 하는법, DIY, 게임</div>
+            </div>
+            <div class="copy-item">
+              <div class="copy-lbl">F&B (음식점·배달)</div>
+              <div class="copy-ex" style="font-size:12px;">레시피, 만들기, 칼로리, 영양, 재료, 소스, 집에서, 혼자, 냉동, 편의점, 마트, 쿠폰 받는법, 이벤트, 노래, 뮤직비디오</div>
+            </div>
+            <div class="copy-item">
+              <div class="copy-lbl">뷰티·피부과·성형</div>
+              <div class="copy-ex" style="font-size:12px;">부작용, 실패, 후유증, 위험, 소송, 의사 면허, 자격, 국가고시, 집에서, 셀프, 집중치료, 공부, 국시, 원장 연락처, 잡플래닛</div>
+            </div>
+            <div class="copy-item">
+              <div class="copy-lbl">교육·학원</div>
+              <div class="copy-ex" style="font-size:12px;">무료강의, 유튜브강의, 인강 추천, 독학, 교재 추천, 책 추천, pdf, 족보, 기출문제, 해설, 취업후기, 합격수기, 강사 유튜브</div>
+            </div>
+            <div class="copy-item">
+              <div class="copy-lbl">프랜차이즈·창업</div>
+              <div class="copy-ex" style="font-size:12px;">본사 전화번호, 고객센터, 불만, 갑질, 폐업, 실패, 망함, 소송, 분쟁, 공정위, 가맹비 환불, 계약해지, 알바비, 직원 구인</div>
+            </div>
+          </div>
+          <div class="warn" class="mt10"><strong>주의:</strong> 무조건 많이 제외하면 노출 자체가 줄어 역효과가 날 수 있습니다. 검색어 보고서에서 실제 유입된 낭비 키워드 위주로 추가하세요.</div>
+        </div>
+      </div>
+
+      <!-- 운영 팁 -->
+      <div class="tab-panel" id="gnk-tip">
+        <div class="card">
+          <div class="card-title">제외 키워드 운영 루틴</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">광고 시작 전 — 기본 목록 등록</div><div class="step-desc">업종별 예시 탭의 공통 + 업종별 키워드를 미리 등록. 초기 예산 낭비를 최소화합니다.</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">집행 3~7일 후 — 검색어 보고서 첫 확인</div><div class="step-desc">인사이트 및 보고서 → 검색어 → 클릭수 내림차순 정렬 → 전환 없이 클릭만 높은 검색어 제외 등록</div><div class="step-note"><strong>확인할 지표</strong><br>• 클릭수 높음 + 전환 0 → 제외 대상<br>• 노출수 높음 + CTR 매우 낮음 → 관련성 낮은 키워드, 제외 고려</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">매주 — 정기 점검</div><div class="step-desc">주 1회 검색어 보고서 확인 → 새로운 낭비 키워드 제외 등록 → 반복. 초기 한 달이 지나면 2주에 한 번으로 줄여도 됩니다.</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">공유 목록으로 캠페인 전체 관리</div><div class="step-desc">캠페인이 2개 이상이라면 공유 라이브러리에 제외 키워드 목록을 만들어 전체 캠페인에 적용하면 관리가 편해집니다.</div></div></div>
+          </div>
+          <div class="good"><strong>결론:</strong> 제외 키워드는 한번에 완성되는 게 아닙니다. 데이터가 쌓일수록 정교해지는 작업이에요. 꾸준히 검색어 보고서를 확인하는 게 핵심입니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="chapter-divider">
+
+    <!-- 구글 검색광고 최적화 -->
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 03 · 심화</span><span class="chapter-title">검색광고 최적화 전략</span></div>
+
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('gopt','score',this)">광고 품질 높이기</button>
+        <button class="tab-btn" onclick="switchTab('gopt','metrics',this)">지표 판단 기준</button>
+        <button class="tab-btn" onclick="switchTab('gopt','bid',this)">입찰 전략 변경</button>
+        <button class="tab-btn" onclick="switchTab('gopt','ext',this)">광고 확장 소재</button>
+      </div>
+
+      <!-- 품질 높이기 -->
+      <div class="tab-panel active" id="gopt-score">
+        <div class="card">
+          <div class="card-title">품질 평가점수(Quality Score)란?</div>
+          <div class="card-desc">구글이 키워드별로 1~10점으로 매기는 점수입니다. 점수가 높을수록 같은 입찰가로 더 상위에 노출되고, 실제 클릭 단가(CPC)도 낮아집니다.</div>
+          <div class="info-grid">
+            <div class="info-cell"><div class="lbl">예상 CTR</div><div class="val">광고 클릭 가능성</div></div>
+            <div class="info-cell"><div class="lbl">광고 관련성</div><div class="val">키워드↔소재 일치도</div></div>
+            <div class="info-cell"><div class="lbl">방문 페이지 경험</div><div class="val">랜딩페이지 품질</div></div>
+          </div>
+          <div class="tip" class="mt10"><strong>확인 방법:</strong> 키워드 탭 → 열 맞춤 → "품질 평가점수" 추가. 7점 이상이면 양호, 4점 이하면 개선 필요.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">점수별 개선 방법</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">예상 CTR 낮음 → 소재 개선</div>
+              <div class="step-desc">제목에 키워드를 직접 포함시키세요. 검색어와 광고 제목이 일치할수록 굵게 표시되어 클릭률이 올라갑니다.</div>
+              <div class="step-note">
+                검색어: "강남 임플란트 가격"<br>
+                ❌ 제목: "치과 전문 진료센터 예약"<br>
+                ✓ 제목: "강남 임플란트 가격 | 당일 상담 가능"
+              </div>
+            </div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">광고 관련성 낮음 → 광고그룹 쪼개기</div>
+              <div class="step-desc">하나의 광고그룹에 너무 다양한 키워드를 묶으면 관련성이 떨어집니다. 테마별로 광고그룹을 세분화하고 각 그룹에 맞는 소재를 따로 작성하세요.</div>
+              <div class="step-note">
+                ❌ 하나의 그룹에: 임플란트, 치아교정, 스케일링, 라미네이트 전부<br>
+                ✓ 그룹 분리: [임플란트 그룹] [교정 그룹] [미용 치료 그룹]
+              </div>
+            </div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">방문 페이지 경험 낮음 → 랜딩페이지 점검</div>
+              <div class="step-desc">광고 클릭 후 이동하는 페이지가 검색 의도와 맞아야 합니다. 로딩 속도, 모바일 최적화, 콘텐츠 관련성 3가지를 점검하세요.</div>
+              <div class="step-note">
+                <strong>체크리스트</strong><br>
+                ☐ 페이지 로딩 3초 이내 (Google PageSpeed로 측정)<br>
+                ☐ 모바일에서 글씨·버튼이 잘 보이는지<br>
+                ☐ 광고 키워드와 랜딩페이지 헤드라인이 일치하는지<br>
+                ☐ 명확한 CTA 버튼 (전화하기·예약하기 등) 있는지
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 지표 판단 -->
+      <div class="tab-panel" id="gopt-metrics">
+        <div class="card">
+          <div class="card-title">핵심 지표 판단 기준</div>
+          <div class="card-desc">최소 2주 이상 데이터 기준으로 판단하세요. 데이터가 적을수록 지표 변동이 크기 때문에 성급하게 수정하면 역효과가 납니다.</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>지표</th><th>양호</th><th>개선 필요</th><th>조치</th></tr></thead>
+              <tbody>
+                <tr><td>CTR (클릭률)</td><td>검색광고 5% 이상</td><td>2% 미만</td><td>제목에 키워드 포함, 소재 문구 개선</td></tr>
+                <tr><td>품질평가점수</td><td>7점 이상</td><td>4점 이하</td><td>소재·랜딩·그룹 구조 점검</td></tr>
+                <tr><td>전환율 (CVR)</td><td>3% 이상</td><td>1% 미만</td><td>랜딩페이지 개선, 전환 추적 확인</td></tr>
+                <tr><td>전환당 비용 (CPA)</td><td>목표 CPA 이하</td><td>목표 초과 지속</td><td>저성과 키워드 입찰가 낮추기 or 중지</td></tr>
+                <tr><td>노출 점유율</td><td>60% 이상</td><td>30% 미만</td><td>입찰가 상향 또는 예산 증액</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tip" class="mt10"><strong>노출 점유율 확인:</strong> 열 맞춤 → "검색 노출 점유율" 추가. 내 광고가 전체 경매에서 몇 %나 노출되는지 보여줍니다.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">키워드별 성과 분류 및 조치</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">A</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">전환 있고 CPA 양호 → 예산·입찰가 올리기</div>
+              <div class="step-desc">성과 좋은 키워드에 예산을 집중하세요. 입찰가를 10~20% 올려 노출 점유율을 높이고 더 많은 전환을 가져오세요.</div>
+            </div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">B</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">클릭 많은데 전환 없음 → 랜딩페이지 의심</div>
+              <div class="step-desc">광고 자체는 잘 클릭되지만 구매·예약으로 이어지지 않으면 랜딩페이지 문제입니다. 페이지 내 이탈률·체류시간을 GA4로 확인하세요.</div>
+            </div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">C</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">노출 많은데 CTR 낮음 → 소재 개선</div>
+              <div class="step-desc">검색 결과에 뜨긴 하는데 클릭을 못 받는 상황. 제목에 혜택·차별점을 더 명확하게 드러내세요. 경쟁사 광고 문구와 비교해보는 것도 좋습니다.</div>
+            </div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">D</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">클릭도 적고 전환도 없음 → 일시 중지</div>
+              <div class="step-desc">2주 이상 클릭 10건 미만이면 검색 수요 자체가 없거나 입찰가가 너무 낮은 것. 입찰가를 올려봐도 개선 없으면 키워드 중지.</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 입찰 전략 -->
+      <div class="tab-panel" id="gopt-bid">
+        <div class="card">
+          <div class="card-title">입찰 전략 단계별 전환</div>
+          <div class="card-desc">처음엔 수동 입찰로 시작해 데이터가 쌓이면 자동화 전략으로 단계적으로 전환하는 게 가장 안전합니다.</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">초기 (0~4주): 클릭수 최대화</div>
+              <div class="step-desc">수동 CPC 또는 클릭수 최대화. 데이터 없는 상태에서 구글이 자동으로 최적화하기 어렵기 때문에 일단 클릭 데이터를 모으는 단계.</div>
+              <div class="tip"><strong>일예산 상한 설정 필수:</strong> 클릭수 최대화는 예산을 빠르게 소진할 수 있어요. 반드시 일예산 상한을 설정하세요.</div>
+            </div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">전환 30건 이상 누적 후: 목표 CPA</div>
+              <div class="step-desc">캠페인 전환 수가 30건을 넘으면 목표 CPA(전환당 목표 비용) 입찰로 전환. 구글이 목표 CPA 이하로 전환을 가져오도록 자동 조정합니다.</div>
+              <div class="step-note">
+                <strong>목표 CPA 설정 방법</strong><br>
+                캠페인 → 설정 → 입찰 → 전환수 최대화 or 목표 CPA 선택<br>
+                목표 CPA = 지금까지 평균 CPA × 1.2 (처음엔 여유 있게 설정)
+              </div>
+            </div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">전환 50건 이상 + 구매 추적 시: 목표 ROAS</div>
+              <div class="step-desc">구매 금액까지 추적되는 경우 목표 ROAS 입찰로 전환. 구글이 설정한 ROAS를 달성하도록 입찰가를 자동 조정합니다.</div>
+              <div class="warn"><strong>주의:</strong> 목표 ROAS를 너무 높게 설정하면 구글이 입찰을 너무 제한해 노출과 클릭이 급감합니다. 현재 ROAS의 80~90% 수준에서 시작하세요.</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 광고 확장 -->
+      <div class="tab-panel" id="gopt-ext">
+        <div class="card">
+          <div class="card-title">광고 확장 소재 (애셋) 활용</div>
+          <div class="card-desc">광고 확장 소재는 추가 비용 없이 광고 면적을 넓혀 CTR을 높이는 기능입니다. 설정하지 않으면 경쟁사보다 광고가 작게 노출됩니다.</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>확장 유형</th><th>내용</th><th>추천 업종</th></tr></thead>
+              <tbody>
+                <tr><td>사이트링크</td><td>광고 아래 추가 링크 4개 노출 (예: 메뉴 · 예약 · 오시는길 · 이벤트)</td><td>전체</td></tr>
+                <tr><td>콜아웃</td><td>짧은 강조 문구 추가 (예: 당일예약 · 무료상담 · 주차가능)</td><td>전체</td></tr>
+                <tr><td>전화번호</td><td>광고에 전화번호 직접 표시 → 클릭 시 바로 전화 연결</td><td>지역 기반 업종</td></tr>
+                <tr><td>위치</td><td>구글 비즈니스 프로필 연동 → 주소·지도 노출</td><td>오프라인 매장</td></tr>
+                <tr><td>가격</td><td>서비스·상품 가격 목록 노출</td><td>이커머스, 학원</td></tr>
+                <tr><td>이미지</td><td>광고 옆에 이미지 노출 (모바일 전용)</td><td>F&B, 뷰티</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="step-list" class="mt14">
+            <div class="step-item"><div class="step-left"><div class="step-dot">→</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">확장 소재 등록 방법</div>
+              <div class="step-desc">구글 애즈 → 캠페인 또는 광고그룹 선택 → 왼쪽 메뉴 <strong>애셋</strong> → 애셋 유형 선택 후 내용 입력 → 저장</div>
+              <div class="good"><strong>권장:</strong> 사이트링크 + 콜아웃 + 전화번호 3가지는 기본으로 설정하세요. 설정만 해도 CTR이 평균 10~20% 올라갑니다.</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></template>
+<template id="tpl-kakao"><!-- ===== 카카오 ===== -->
+  <div class="platform-view" id="view-kakao">
+    <div class="platform-header" style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+      <div class="platform-header-left">
+        <span class="badge b-kakao">카카오 모먼트</span>
+        <div class="platform-name">카카오 모먼트</div>
+        <div class="platform-desc">카카오톡, 다음, 카카오스토리 등 카카오 계열 서비스에 배너·네이티브 광고를 노출합니다. 30~50대 국내 이용자 비중이 높습니다.</div>
+        <div class="platform-meta">
+          <span class="meta-chip">moment.kakao.com</span>
+          <span class="meta-chip">CPM / CPC 선택</span>
+          <span class="meta-chip">일 1만원~</span>
+          <span class="meta-chip">검수 최대 1영업일</span>
+        </div>
+      </div>
+    </div>
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 01</span><span class="chapter-title">기초 세팅 방법</span></div>
+      <div class="card">
+        <div class="step-list">
+          <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">카카오 비즈니스 계정 만들기</div><div class="step-desc">business.kakao.com → 카카오 계정 로그인 → 사업자 정보 입력 → moment.kakao.com에서 광고 집행</div>
+            <div class="mockup-simple"><span class="ms-url">🌐 business.kakao.com</span><span class="ms-field">✏ 123-45-67890</span><span class="ms-field">✏ 내 가게 이름</span><span class="ms-tip">→ 가입 후 moment.kakao.com으로 이동해서 광고 집행</span></div></div>
+            <div class="tip"><strong>선행 작업:</strong> 카카오톡 채널(구 플러스친구)을 먼저 개설하면 광고와 연동 가능합니다.</div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">캠페인 생성</div><div class="step-desc">캠페인 만들기 → 목표: 방문(트래픽) / 전환 / 도달 중 택 1 → 일예산 또는 총예산 설정</div>
+            <div class="mockup-simple"><div class="ms-section">광고 목표</div><div class="ms-option">✓ ✓ 방문트래픽 (초기 추천)</div></div><div class="mockup-label" class="mt8">예산 유형</div><div class="mockup-option-row"><div class="mockup-option selected">✓ 일예산</div><div class="mockup-option">총예산</div></div><div class="mockup-label">일 예산</div><div style="display:flex;gap:4px;align-items:center;"><div class="mockup-field focus" style="width:80px;margin-bottom:0;">20,000</div><span class="fs10-muted">원 (최소 1만원~)</span></div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">광고그룹 (타겟) 설정</div><div class="step-desc">성별 / 연령 / 지역 / 관심사 설정 → 기기: 모바일 우선 → 노출 지면 선택</div>
+            <div class="mockup-simple"><div class="ms-section">오디언스 타겟</div><div class="ms-option">✓ ✓ 30대</div></div><div class="mockup-label" class="mt6">지역</div><div class="mockup-field focus">강남구, 서초구</div></div><div style="flex:1;min-width:110px;"><div class="mockup-label">관심사</div><div class="mockup-field focus">외식·맛집</div><div class="mockup-label" class="mt6">노출 지면</div><div class="mockup-option-row"><div class="mockup-option selected">✓ 카카오톡</div><div class="mockup-option selected">✓ 다음</div></div></div></div><div class="mockup-label" class="mt6">기기</div><div class="mockup-option-row"><div class="mockup-option selected">✓ 모바일</div><div class="mockup-option">PC</div></div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">소재 등록</div><div class="step-desc">이미지 업로드 → 권장: 1200×628px 또는 800×800px → 홍보 문구(45자) → 랜딩 URL</div>
+            <div class="mockup-simple"><div class="ms-section">소재 등록</div><div class="ms-field">✏️ 강남역 맛집, 웨이팅 없이 예약 가능합니다</div><div class="ms-field">✏️ https://myrestaurant.com</div><div class="ms-tip">→ 이미지 내 텍스트 20% 초과·최저가·가격비교 표현 → 반려</div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">5</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">검수 후 집행</div><div class="step-desc">소재 저장 → 자동 검수 (최대 1 영업일) → 승인 후 집행 시작</div>
+            <div class="mockup-simple"><div class="ms-tip">→ 반려 시 모먼트 내 "반려 사유" 확인 후 수정 재제출</div></div></div></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="chapter-divider">
+
+    <!-- 카카오 픽셀 심화 -->
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 02 · 심화</span><span class="chapter-title">카카오 픽셀 & SDK 설치 (전환 추적)</span></div>
+
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('kpx','concept',this)">픽셀이란?</button>
+        <button class="tab-btn" onclick="switchTab('kpx','install',this)">설치 방법</button>
+        <button class="tab-btn" onclick="switchTab('kpx','event',this)">이벤트 설정</button>
+        <button class="tab-btn" onclick="switchTab('kpx','check',this)">설치 확인법</button>
+      </div>
+
+      <!-- 픽셀이란 -->
+      <div class="tab-panel active" id="kpx-concept">
+        <div class="card">
+          <div class="card-title">카카오 픽셀이란?</div>
+          <div class="card-desc">내 홈페이지에 심어두는 추적 코드입니다. 광고를 클릭한 사람이 사이트에서 어떤 행동을 했는지(구매, 회원가입, 장바구니 등)를 카카오 모먼트에 전달해줍니다.</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">!</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">픽셀이 없으면 생기는 문제</div>
+              <div class="step-desc">광고는 집행되지만 "클릭 후 구매까지 이어졌는지" 알 수 없습니다. 전환 최적화 캠페인 목표를 쓰려면 픽셀이 필수입니다.</div>
+              <div class="step-note">
+                <strong>픽셀 있을 때 vs 없을 때</strong><br>
+                픽셀 없음: 클릭수·노출수만 확인 가능. 어떤 광고가 실제 매출을 만들었는지 모름<br>
+                픽셀 있음: 광고 → 클릭 → 구매까지 연결. ROAS 계산 가능, 전환 최적화 가능
+              </div>
+            </div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">!</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">픽셀 vs SDK</div>
+              <div class="step-desc">홈페이지(웹)가 있으면 픽셀, 앱이 있으면 SDK를 사용합니다. 둘 다 있으면 각각 설치해야 합니다.</div>
+              <div class="step-note">
+                • <strong>카카오 픽셀</strong>: 홈페이지에 자바스크립트 코드 삽입 → 웹 방문자 추적<br>
+                • <strong>카카오 SDK</strong>: 앱에 라이브러리 삽입 → 앱 내 행동 추적<br>
+                → 이 가이드는 픽셀(웹) 기준
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 설치 방법 -->
+      <div class="tab-panel" id="kpx-install">
+        <div class="card">
+          <div class="card-title">픽셀 생성 및 설치 순서</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">픽셀 생성</div>
+              <div class="step-desc">카카오 모먼트(moment.kakao.com) → 상단 메뉴 <strong>도구</strong> → <strong>카카오 픽셀 & SDK</strong> → <strong>픽셀 생성</strong> 클릭 → 픽셀 이름 입력 (예: "내쇼핑몰_픽셀") → 생성</div>
+              <div class="tip"><strong>생성 위치:</strong> 광고 계정 1개당 픽셀 여러 개 만들 수 있어요. 홈페이지가 여러 개면 각각 만드는 게 좋습니다.</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">픽셀 코드 복사</div>
+              <div class="step-desc">생성된 픽셀 클릭 → <strong>픽셀 설치 가이드</strong> → 기본 픽셀 코드(스크립트) 복사</div>
+              <div class="step-note" style="font-family:monospace;font-size:11px;line-height:1.8;">
+                &lt;!-- 카카오 픽셀 기본 코드 (예시) --&gt;<br>
+                &lt;script type='text/javascript'&gt;<br>
+                &nbsp;&nbsp;kakaoPixel('픽셀ID').pageView();<br>
+                &lt;/script&gt;
+              </div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">홈페이지 &lt;head&gt; 태그 안에 삽입</div>
+              <div class="step-desc">복사한 코드를 홈페이지 모든 페이지의 <strong>&lt;head&gt; ~ &lt;/head&gt;</strong> 태그 안에 붙여넣기</div>
+              <div class="step-note">
+                <strong>플랫폼별 삽입 위치</strong><br>
+                • 카페24 / 고도몰: 쇼핑몰 관리 → 디자인 → HTML 편집 → &lt;head&gt; 안<br>
+                • 워드프레스: 플러그인 "Insert Headers and Footers" → Header 영역에 붙여넣기<br>
+                • 아임웹: 사이트 설정 → 스크립트 → Head 영역<br>
+                • 직접 개발: index.html 또는 공통 레이아웃 파일의 &lt;head&gt; 안
+              </div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">캠페인에 픽셀 연결</div>
+              <div class="step-desc">카카오 모먼트 → 광고그룹 설정 → <strong>전환 추적</strong> 항목 → 설치한 픽셀 선택 → 추적할 전환 이벤트 선택 (구매, 회원가입 등)</div>
+              <div class="warn"><strong>주의:</strong> 픽셀을 설치했더라도 캠페인에 연결하지 않으면 전환 추적이 되지 않습니다.</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 이벤트 설정 -->
+      <div class="tab-panel" id="kpx-event">
+        <div class="card">
+          <div class="card-title">전환 이벤트 종류 & 설치 위치</div>
+          <div class="card-desc">기본 픽셀은 페이지 방문만 추적합니다. 구매·회원가입 등 세부 행동을 추적하려면 해당 페이지에 이벤트 코드를 추가로 삽입해야 합니다.</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>이벤트</th><th>코드</th><th>삽입 위치</th></tr></thead>
+              <tbody>
+                <tr><td>페이지 조회</td><td style="font-family:monospace;font-size:11px;">.pageView()</td><td>모든 페이지 공통 (기본)</td></tr>
+                <tr><td>회원가입 완료</td><td style="font-family:monospace;font-size:11px;">.completeRegistration()</td><td>가입 완료 페이지</td></tr>
+                <tr><td>장바구니 담기</td><td style="font-family:monospace;font-size:11px;">.addToCart()</td><td>장바구니 추가 버튼 클릭 시</td></tr>
+                <tr><td>구매 완료</td><td style="font-family:monospace;font-size:11px;">.purchase()</td><td>주문 완료 페이지</td></tr>
+                <tr><td>상담 신청</td><td style="font-family:monospace;font-size:11px;">.lead()</td><td>문의·예약 완료 페이지</td></tr>
+                <tr><td>검색</td><td style="font-family:monospace;font-size:11px;">.search()</td><td>검색 결과 페이지</td></tr>
+                <tr><td>콘텐츠 조회</td><td style="font-family:monospace;font-size:11px;">.viewContent()</td><td>상품 상세 페이지</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="step-note" style="margin-top:12px;font-family:monospace;font-size:11px;line-height:1.8;">
+            <strong style="font-family:'Inter',sans-serif;font-size:12px;">구매 완료 이벤트 코드 예시</strong><br><br>
+            &lt;script&gt;<br>
+            &nbsp;&nbsp;kakaoPixel('픽셀ID').purchase({<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;total_price: '35000',&nbsp;&nbsp;// 구매 금액<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;currency: 'KRW'<br>
+            &nbsp;&nbsp;});<br>
+            &lt;/script&gt;
+          </div>
+          <div class="tip" class="mt10"><strong>우선순위:</strong> 처음엔 구매 완료(.purchase) 또는 상담 신청(.lead) 하나만 설치해도 충분합니다. 전환 최적화 캠페인 운영에 바로 활용할 수 있어요.</div>
+        </div>
+      </div>
+
+      <!-- 설치 확인 -->
+      <div class="tab-panel" id="kpx-check">
+        <div class="card">
+          <div class="card-title">설치 확인 방법</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">카카오 모먼트에서 확인</div>
+              <div class="step-desc">도구 → 카카오 픽셀 & SDK → 생성한 픽셀 클릭 → <strong>수집 현황</strong> 탭 → 오늘 날짜에 pageView 수치가 잡히면 정상 설치 완료</div>
+              <div class="tip"><strong>주의:</strong> 설치 직후 바로 수집되지 않을 수 있어요. 홈페이지를 직접 방문한 뒤 5~10분 기다린 후 확인하세요.</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">크롬 확장 프로그램으로 실시간 확인</div>
+              <div class="step-desc">크롬 웹스토어에서 <strong>"카카오 픽셀 헬퍼"</strong> 설치 → 내 홈페이지 접속 → 확장 프로그램 아이콘 클릭 → 픽셀이 정상 작동 중이면 초록색 표시</div>
+              <div class="good"><strong>가장 빠른 확인법:</strong> 카카오 픽셀 헬퍼 확장 프로그램을 설치하면 페이지를 열 때마다 픽셀 동작 여부를 실시간으로 확인할 수 있습니다.</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">이벤트별 수집 확인</div>
+              <div class="step-desc">수집 현황 탭 → 이벤트 목록에서 각 이벤트(purchase, lead 등)의 수집 여부 확인 → 이벤트가 보이면 해당 전환 추적 정상 작동</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">픽셀이 수집되지 않을 때 체크리스트</div>
+              <div class="step-note">
+                ☐ 코드가 &lt;head&gt; 안에 삽입되었는지 확인<br>
+                ☐ 픽셀 ID가 올바르게 복사되었는지 확인<br>
+                ☐ 광고 차단 확장 프로그램(애드블록) 비활성화 후 재확인<br>
+                ☐ 홈페이지 캐시 삭제 후 재방문<br>
+                ☐ 카카오 모먼트 픽셀 상태가 "활성"인지 확인
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></template>
+<template id="tpl-meta"><!-- ===== 메타 ===== -->
+  <div class="platform-view" id="view-meta">
+    <div class="platform-header" style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+      <div class="platform-header-left">
+        <span class="badge b-meta">메타 광고</span>
+        <div class="platform-name">메타 광고</div>
+        <div class="platform-desc">페이스북·인스타그램 피드, 스토리, 릴스에 이미지·영상 광고를 노출합니다. 20~40대 타겟과 비주얼 중심 업종에 강합니다.</div>
+        <div class="platform-meta">
+          <span class="meta-chip">business.facebook.com</span>
+          <span class="meta-chip">CPM 기본 (자동)</span>
+          <span class="meta-chip">일 약 1,500원~</span>
+          <span class="meta-chip">학습기간 7~14일</span>
+        </div>
+      </div>
+    </div>
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 01</span><span class="chapter-title">기초 세팅 방법</span></div>
+      <div class="card">
+        <div class="step-list">
+          <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">비즈니스 계정 생성</div><div class="step-desc">business.facebook.com → 비즈니스 계정 생성 → 페이스북 페이지 또는 인스타그램 계정 연결 → 광고 계정 생성</div>
+            <div class="mockup-simple"><span class="ms-url">🌐 business.facebook.com</span><span class="ms-section">비즈니스 설정</span><span class="ms-tip">→ 개인 계정 직접 광고 금지 — 반드시 Meta Business Suite 경유</span></div></div>
+            <div class="warn"><strong>중요:</strong> 개인 계정으로 직접 광고하면 한도 제한이 생깁니다. 반드시 Meta Business Suite를 통해 운영하세요.</div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">메타 픽셀 설치 (필수)</div><div class="step-desc">Events Manager → 데이터 소스 → 픽셀 → 새 픽셀 만들기 → 생성된 코드를 홈페이지 &lt;head&gt; 태그 안에 삽입</div>
+            <div class="mockup-simple"><div class="ms-section">Events Manager — 픽셀 설정</div></div><div style="flex:1;background:#f9fafb;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:18px;margin-bottom:4px;">📱</div><div class="fs10-muted">앱</div><div class="t9g">SDK</div></div></div><div class="mockup-label">픽셀 코드 (head 태그 안에 삽입)</div><div style="background:#1e293b;border-radius:4px;padding:8px;font-family:monospace;font-size:10px;color:#4ade80;line-height:1.6;">&lt;script&gt;<br>&nbsp;&nbsp;!function(f,b,e,v,n,t,s){<br>&nbsp;&nbsp;fbq('init', '<span style="color:#fbbf24;">픽셀ID</span>');<br>&nbsp;&nbsp;fbq('track', 'PageView');<br>&lt;/script&gt;</div><div class="callout callout-warn"><div class="callout-num">!</div><span>픽셀 없이 광고 먼저 집행하면 전환 최적화 불가 — 픽셀 설치가 1순위</span></div></div></div></div>
+            <div class="tip"><strong>픽셀이 중요한 이유:</strong> 방문자 데이터가 쌓여야 전환 최적화가 가능합니다. 픽셀 없이 광고부터 집행하면 최적화 불가.</div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">캠페인 생성 — 목표 선택</div><div class="step-desc">광고 관리자 → + 만들기 → 목표 선택</div>
+            <div class="mockup-simple"><div class="ms-section">캠페인 목표</div></div></div><div class="mockup-option selected" style="display:flex;align-items:center;gap:8px;border-color:#1877f2;color:#111827;"><span style="font-size:14px;">🖱️</span><div><div style="font-size:11px;color:#16a34a;">✓ 트래픽 (초기 추천)</div><div style="font-size:9px;color:#16a34a;">홈페이지 방문자 늘리기</div></div></div><div class="mockup-option" style="display:flex;align-items:center;gap:8px;"><span style="font-size:14px;">💰</span><div><div style="font-size:11px;color:#111827;">전환</div><div class="t9g">구매·예약 유도 (픽셀 필요)</div></div></div></div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">광고 세트 (타겟 & 예산)</div><div class="step-desc">위치 / 연령 / 성별 / 관심사 설정 → 일예산 입력 → 노출 위치: Advantage+ 자동 추천</div>
+            <div class="mockup-simple"><div class="ms-section">타겟 설정</div><div class="ms-field">✏️ 대한민국 · 서울 · 강남구</div><div class="ms-field">✏️ 25</div></div></div><div style="flex:1;"><div class="mockup-label">성별</div><div class="mockup-option-row"><div class="mockup-option selected">✓ 여성</div><div class="mockup-option">전체</div></div></div></div><div class="mockup-label" class="mt6">오디언스 크기</div><div style="height:8px;background:#d1d5db;border-radius:4px;margin-bottom:4px;"><div style="width:60%;height:100%;background:#16a34a;border-radius:4px;"></div></div><div style="display:flex;justify-content:space-between;font-size:9px;color:#6b7280;"><span>좁음</span><span style="color:#16a34a;">적정 (약 80만명)</span><span>넓음</span></div><div class="mockup-label" class="mt8">노출 위치</div><div class="mockup-option-row"><div class="mockup-option selected">✓ Advantage+ 자동</div></div></div></div></div>
+            <div class="tip"><strong>타겟 팁:</strong> 처음엔 너무 좁히지 마세요. 오디언스 크기 50만~200만이 학습에 유리합니다.</div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">5</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">소재 등록</div><div class="step-desc">이미지(1080×1080px) 또는 영상(릴스 형태 추천) 업로드 → 광고 문구(125자) → 제목(40자) → 버튼 → URL</div>
+            <div class="mockup-simple"><div class="ms-section">광고 소재</div><div class="ms-option">✓ ✓ 이미지</div></div><div style="border:1px dashed #d1d5db;border-radius:4px;padding:12px;text-align:center;margin:8px 0;"><span class="fs10-muted">1080×1080px (정방형)<br>또는 1080×1920px (세로형·릴스)</span></div><div class="mockup-label">광고 문구 (125자)</div><div class="mockup-field focus" style="height:36px;">강남역 피부과, 지금 초진 상담 무료로 받아보세요</div><div class="mockup-label">제목 (40자)</div><div class="mockup-field focus">지금 예약하면 무료 상담</div><div style="display:flex;gap:4px;align-items:center;"><div style="flex:1;"><div class="mockup-label">행동 유도 버튼</div><div class="mockup-option-row"><div class="mockup-option selected">✓ 자세히 알아보기</div><div class="mockup-option">지금 예약</div></div></div></div><div class="mockup-label" class="mt4">최종 URL</div><div class="mockup-field focus">https://myclinic.com</div></div></div></div></div></div>
+
+          <div class="step-item"><div class="step-left"><div class="step-dot">6</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">게시 후 학습기간</div><div class="step-desc">광고 게시 → 메타 검수 → 승인 후 집행 시작</div>
+            <div class="mockup-simple"><div class="ms-tip">→ 학습 중 예산·소재·타겟 수정하면 학습 초기화 — 최대한 건드리지 말 것</div></div></div></div>
+            <div class="tip"><strong>학습 기간:</strong> 집행 후 7~14일은 성과가 들쭉날쭉합니다. 이 기간엔 소재·예산을 자주 바꾸지 마세요.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="chapter-divider">
+
+    <!-- 메타 최적화 심화 -->
+    <div class="chapter">
+      <div class="chapter-header"><span class="chapter-num">Chapter 02 · 심화</span><span class="chapter-title">학습기간 후 최적화 전략</span></div>
+
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('mopt','signal',this)">학습 완료 확인</button>
+        <button class="tab-btn" onclick="switchTab('mopt','metrics',this)">지표 판단 기준</button>
+        <button class="tab-btn" onclick="switchTab('mopt','creative',this)">소재 최적화</button>
+        <button class="tab-btn" onclick="switchTab('mopt','scale',this)">예산 확장 방법</button>
+      </div>
+
+      <!-- 학습 완료 확인 -->
+      <div class="tab-panel active" id="mopt-signal">
+        <div class="card">
+          <div class="card-title">학습 완료 여부 확인</div>
+          <div class="card-desc">광고 관리자 → 광고 세트 목록 → 게재 상태 컬럼 확인. 학습 완료 시 "활성"으로 바뀝니다.</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>게재 상태</th><th>의미</th><th>할 일</th></tr></thead>
+              <tbody>
+                <tr><td><span class="tag-mid">학습 중</span></td><td>최초 집행 후 7~14일. 알고리즘이 최적 오디언스를 탐색하는 단계</td><td>건드리지 말고 기다리기</td></tr>
+                <tr><td><span class="tag-high">학습 제한됨</span></td><td>주간 전환수 50건 미달. 알고리즘이 충분한 데이터를 못 받는 중</td><td>전환 이벤트를 더 쉬운 것으로 변경 (구매→장바구니→조회 순)</td></tr>
+                <tr><td><span class="tag-low">활성</span></td><td>학습 완료. 알고리즘이 안정적으로 최적 오디언스를 타겟팅 중</td><td>지표 분석 후 최적화 시작</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="warn" class="mt10"><strong>학습 초기화 주의:</strong> 예산을 20% 이상 변경하거나, 타겟·소재·입찰 전략을 수정하면 학습이 처음부터 다시 시작됩니다. 학습 중에는 수정을 최소화하세요.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">학습 기간 단축 방법</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">전환 이벤트를 쉬운 것부터 설정</div><div class="step-desc">구매 완료 전환수가 주 50건 미만이면 학습이 잘 안 됩니다. 구매 → 장바구니 담기 → 콘텐츠 조회 순으로 더 쉬운 이벤트로 바꿔보세요.</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">타겟을 너무 좁히지 않기</div><div class="step-desc">오디언스가 너무 작으면 알고리즘이 탐색할 공간이 없습니다. 최소 50만 이상 유지, 처음엔 Advantage+ 자동 타겟 추천.</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">소재 수를 광고 세트당 2~4개로 제한</div><div class="step-desc">소재가 너무 많으면 각 소재에 예산이 분산되어 학습이 느려집니다. 처음엔 2~3개로 시작하고 성과 확인 후 교체.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 지표 판단 -->
+      <div class="tab-panel" id="mopt-metrics">
+        <div class="card">
+          <div class="card-title">핵심 지표 판단 기준</div>
+          <div class="card-desc">학습 완료 후 최소 7일 데이터를 기준으로 판단하세요. 하루 단위로 보면 변동이 커서 잘못된 판단을 내릴 수 있습니다.</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>지표</th><th>양호</th><th>개선 필요</th><th>원인 및 조치</th></tr></thead>
+              <tbody>
+                <tr><td>CTR (클릭률)</td><td>1% 이상</td><td>0.5% 미만</td><td>소재 교체. 썸네일·첫 3초가 핵심</td></tr>
+                <tr><td>CPC (클릭당 비용)</td><td>업종 평균 이하</td><td>ROAS 목표 대비 과도</td><td>타겟 범위 확대 또는 소재 개선</td></tr>
+                <tr><td>전환율 (CVR)</td><td>2% 이상</td><td>1% 미만</td><td>랜딩페이지 문제. 페이지 속도·UI 점검</td></tr>
+                <tr><td>ROAS</td><td>목표 ROAS 이상</td><td>손익분기 미달</td><td>소재 교체 or 타겟 변경 or 예산 축소</td></tr>
+                <tr><td>빈도 (Frequency)</td><td>3 이하</td><td>5 이상</td><td>같은 사람에게 너무 많이 노출. 소재 교체 또는 타겟 확대</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tip" class="mt10"><strong>광고 피로도 신호:</strong> CTR이 떨어지고 빈도가 올라가면 오디언스가 소재에 질린 것. 소재를 교체할 타이밍입니다.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">보고서 날짜 범위 설정법</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">·</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">기간: 최근 7일 or 14일 기준</div><div class="step-desc">광고 관리자 우측 상단 날짜 필터 → 최근 7일 선택. 오늘 포함 시 당일 데이터가 불완전하므로 어제 기준으로 설정 추천.</div></div></div>
+            <div class="step-item"><div class="step-left"><div class="step-dot">·</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">열 커스텀으로 핵심 지표만 보기</div><div class="step-desc">열 맞춤 설정 → CTR, CPC, 전환수, 전환당 비용(CPA), ROAS, 빈도 추가. 불필요한 지표는 제거해 보고서를 단순하게 유지.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 소재 최적화 -->
+      <div class="tab-panel" id="mopt-creative">
+        <div class="card">
+          <div class="card-title">소재 최적화 원칙</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">승자 소재 파악 → 유사 소재 추가</div>
+              <div class="step-desc">광고 세트 내 소재별 CTR·전환율 비교 → 가장 성과 좋은 소재의 스타일(배경색, 문구 구조, 영상 길이 등)을 분석 → 유사한 방향으로 새 소재 제작</div>
+              <div class="step-note"><strong>승자 소재 판단 기준</strong><br>• CTR 가장 높은 소재 → 클릭 유도력이 강함<br>• CPA 가장 낮은 소재 → 전환 효율이 좋음<br>→ 둘 다 좋은 소재를 메인으로 예산 집중</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">성과 낮은 소재 끄기</div>
+              <div class="step-desc">CTR 0.5% 미만이면서 전환 0인 소재는 7일 후 끄기. 단, 광고 세트당 최소 2개는 남겨두세요.</div>
+              <div class="warn"><strong>주의:</strong> 소재를 끄면 광고 세트 학습이 일부 초기화될 수 있습니다. 한번에 여러 개를 동시에 끄지 말고 하나씩 순차적으로.</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">릴스·영상 소재로 전환 테스트</div>
+              <div class="step-desc">이미지보다 영상(릴스 형태)이 CPM이 낮고 도달이 넓은 경향이 있습니다. 기존 이미지 광고와 병행해서 영상 소재를 테스트해보세요.</div>
+              <div class="step-note"><strong>릴스 소재 핵심</strong><br>• 세로형 (9:16) 1080×1920px<br>• 첫 3초 안에 핵심 메시지 노출<br>• 자막 필수 (소리 꺼진 상태로도 이해 가능하게)<br>• 길이: 15~30초 권장</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">소재 교체 주기</div>
+              <div class="step-desc">빈도 3~4 도달 시 또는 CTR이 2주 연속 하락 시 새 소재 투입. 기존 소재를 끄는 게 아니라 새 소재를 추가하고 성과 비교 후 정리하는 방식 추천.</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 예산 확장 -->
+      <div class="tab-panel" id="mopt-scale">
+        <div class="card">
+          <div class="card-title">예산 확장 방법</div>
+          <div class="card-desc">ROAS가 목표치를 안정적으로 달성하고 있을 때 확장을 검토하세요. 성과가 나쁜 상태에서 예산을 늘리면 손실만 커집니다.</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-left"><div class="step-dot">1</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">예산 증액 — 20% 규칙</div>
+              <div class="step-desc">한번에 20% 이하로 증액하세요. 그 이상 한번에 올리면 학습이 초기화됩니다.</div>
+              <div class="step-note">
+                예: 일예산 1만원 → 1.2만원 (일주일 유지) → 1.44만원 → 1.73만원<br>
+                → 단계적으로 올리면서 ROAS 유지 여부를 확인
+              </div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">2</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">유사 타겟(Lookalike) 활용</div>
+              <div class="step-desc">픽셀 데이터 누적 후 → 광고 관리자 → 오디언스 → 유사 오디언스 만들기 → 소스: 구매 완료 픽셀 이벤트 → 유사도 1~3% 선택</div>
+              <div class="tip"><strong>유사 타겟 조건:</strong> 소스 오디언스(실제 구매자)가 최소 100명 이상이어야 유사 오디언스를 만들 수 있습니다.</div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">3</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">리타겟팅 캠페인 추가</div>
+              <div class="step-desc">홈페이지 방문자 또는 장바구니 담기 후 미구매자를 대상으로 별도 캠페인을 만들어 재노출. 이미 관심 있는 사람이라 전환율이 일반 캠페인보다 높습니다.</div>
+              <div class="step-note">
+                <strong>리타겟팅 오디언스 설정</strong><br>
+                오디언스 → 맞춤 오디언스 → 웹사이트 → 최근 30일 방문자<br>
+                또는: 장바구니 담기 이벤트 발생 후 구매 이벤트 미발생자
+              </div>
+            </div></div>
+
+            <div class="step-item"><div class="step-left"><div class="step-dot">4</div><div class="step-line"></div></div><div class="step-body">
+              <div class="step-title">확장 후 성과 저하 시 대응</div>
+              <div class="step-desc">예산 확장 후 ROAS가 떨어지면 예산을 이전 수준으로 되돌리세요. 무리하게 유지하면 손실이 누적됩니다.</div>
+              <div class="good"><strong>원칙:</strong> 메타 광고 최적화는 소재 교체 → 성과 확인 → 예산 확장의 사이클을 반복하는 작업입니다. 한번에 여러 변수를 동시에 바꾸면 무엇이 효과적인지 알 수 없으니 한 번에 하나씩만 변경하세요.</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></template>
+
+
+<script>
+function toggleSidebar() {
+  const sb = document.querySelector('.sidebar');
+  const ov = document.getElementById('sidebar-overlay');
+  const open = sb.classList.toggle('mobile-open');
+  if (ov) ov.style.display = open ? 'block' : 'none';
+}
+// 사이드바 아이템 클릭 시 모바일에서 자동 닫기
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.sidebar-item')) {
+    const sb = document.querySelector('.sidebar');
+    const ov = document.getElementById('sidebar-overlay');
+    if (sb) sb.classList.remove('mobile-open');
+    if (ov) ov.style.display = 'none';
+  }
+});
+</script>
+
+
+<script>
+function downloadFile() {
+  const html = document.documentElement.outerHTML;
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '애드베이직_광고가이드.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
