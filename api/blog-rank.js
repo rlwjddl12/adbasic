@@ -1,62 +1,114 @@
 // api/blog-rank.js
 //
 // 저장 위치: adbasic/api/blog-rank.js  (analyze-blog.js와 같은 폴더)
-//
 // 사용법: /api/blog-rank?url=블로그글URL&keyword=확인할키워드
 //
-// 동작 방식:
-// 1. 입력한 블로그 글 URL에서 blogId, logNo를 추출합니다.
-// 2. 네이버 블로그 검색(where=post) 결과 페이지를 최대 3페이지(최대 90개)까지 가져옵니다.
-// 3. 결과 페이지 안의 blog.naver.com 링크들을 "나오는 순서 그대로" 훑어서
-//    중복을 제거한 뒤, 내 글이 몇 번째로 나오는지 찾습니다.
+// ── 왜 이렇게 만들었는지 ──
+// 실제 네이버 블로그 검색 결과 페이지의 소스를 직접 확인해보니, 결과 목록은
+// <a href> 태그로 바로 나오는 게 아니라 <script> 안에 통째로 JSON 데이터로 심어져 있고,
+// 그 데이터를 브라우저의 자바스크립트(entry.bootstrap(...))가 나중에 화면에 그려 넣는 방식이었습니다.
+// 그래서 이 함수는 그 JSON을 직접 파싱해서 각 게시물의 순위(r 값)와 링크를 추출합니다.
+// 이 방식은 이전의 "링크 등장 순서" 방식보다 훨씬 정확합니다.
 //
-// ⚠️ 참고: 특정 CSS class 이름에 의존하지 않고 "링크가 나오는 순서"만 보고 순위를 매기는
-// 방식이라 네이버가 디자인을 바꿔도 비교적 잘 버티는 편이지만, 네이버 검색 결과 자체가
-// 로그인 여부·개인화·지역에 따라 사람마다 다르게 보일 수 있어 100% 일치하지 않을 수 있습니다.
-// 자동화된 요청을 네이버가 일시적으로 차단(429 등)할 수도 있습니다.
+// ── 알아두어야 할 제약 ──
+// 1) "인기글"처럼 광고(파워링크성)로 붙는 슬롯은 실제 블로그 링크가 암호화된 리다이렉트 주소로만
+//    나오기 때문에, 그 자리에 어떤 블로그가 들어있는지는 저희 쪽에서 알아낼 방법이 없습니다.
+//    즉, 내 글이 "광고" 형태로 노출되고 있다면 이 도구로는 확인이 안 됩니다.
+// 2) 네이버는 첫 화면 로딩 시 보통 30~35개 정도의 결과를 한 번에 내려줍니다. 그 이후(스크롤 시 추가 로딩되는
+//    부분)는 별도의 서명된 요청 방식이라 안정적으로 재현하기 어려워, 이 도구는 "최초 노출되는 상위 목록"까지만 확인합니다.
+// 3) 네이버가 화면 구조(JSON 스키마)를 바꾸면 이 파서도 다시 손봐야 할 수 있습니다.
 //
-// 필요 패키지: cheerio (analyze-blog.js와 공용, package.json에 이미 추가되어 있으면 OK)
-
-const cheerio = require('cheerio');
+// 필요 패키지: 없음 (표준 fetch만 사용, cheerio 불필요)
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 
-const MAX_PAGES = 3; // 페이지당 30개 기준, 최대 90위까지 확인
-
 function parseBlogUrl(url) {
-  // blog.naver.com/{blogId}/{logNo} 또는 m.blog.naver.com/{blogId}/{logNo} 형태에서 추출
   const m = url.match(/blog\.naver\.com\/([^\/?]+)\/(\d+)/);
   if (!m) return null;
   return { blogId: m[1], logNo: m[2] };
 }
 
-async function fetchSearchPage(keyword, start) {
-  const searchUrl =
-    'https://search.naver.com/search.naver?where=post&sm=tab_jum&query=' +
-    encodeURIComponent(keyword) +
-    '&start=' + start;
-  const res = await fetch(searchUrl, { headers: { 'User-Agent': UA, 'Accept-Language': 'ko-KR,ko;q=0.9' } });
-  if (!res.ok) throw new Error('네이버 검색 요청 실패: ' + res.status);
-  return res.text();
+function extractBalancedObject(text, startIdx) {
+  let depth = 0;
+  let inString = false;
+  let strChar = '';
+  for (let i = startIdx; i < text.length; i++) {
+    const c = text[i];
+    if (inString) {
+      if (c === '\\') { i++; continue; } // 이스케이프된 문자는 건너뜀
+      if (c === strChar) inString = false;
+      continue;
+    } else {
+      if (c === '"' || c === "'") { inString = true; strChar = c; continue; }
+      if (c === '{') depth++;
+      else if (c === '}') {
+        depth--;
+        if (depth === 0) return text.slice(startIdx, i + 1);
+      }
+    }
+  }
+  return null;
 }
 
-function extractOrderedPosts(html) {
-  const $ = cheerio.load(html);
-  const seen = new Set();
-  const ordered = [];
+function extractBootstrapJson(html) {
+  const marker = 'entry.bootstrap(document.getElementById(';
+  const idx = html.indexOf(marker);
+  if (idx === -1) return null;
+  const closeParenIdx = html.indexOf(')', idx + marker.length);
+  if (closeParenIdx === -1) return null;
+  const objStartIdx = html.indexOf('{', closeParenIdx);
+  if (objStartIdx === -1) return null;
+  const objText = extractBalancedObject(html, objStartIdx);
+  if (!objText) return null;
+  try {
+    return JSON.parse(objText);
+  } catch (e) {
+    return null;
+  }
+}
 
-  $('a').each((_, el) => {
-    const href = $(el).attr('href') || '';
-    const m = href.match(/blog\.naver\.com\/([^\/?]+)\/(\d+)/);
-    if (!m) return;
-    const key = m[1] + '/' + m[2];
-    if (seen.has(key)) return;
-    seen.add(key);
-    ordered.push({ blogId: m[1], logNo: m[2] });
+function walkForItems(obj, results) {
+  if (Array.isArray(obj)) {
+    obj.forEach((o) => walkForItems(o, results));
+    return;
+  }
+  if (obj && typeof obj === 'object') {
+    if (obj.templateId === 'ugcItem' && obj.props) {
+      const props = obj.props;
+      const rank =
+        props.clickLog && props.clickLog.title && typeof props.clickLog.title.r === 'number'
+          ? props.clickLog.title.r
+          : null;
+      const isAd = props.sourceProfile ? !!props.sourceProfile.isAdType : false;
+
+      let url = null;
+      if (props.keep && props.keep.keepTriggerUrl && props.keep.keepTriggerUrl.includes('blog.naver.com')) {
+        url = props.keep.keepTriggerUrl;
+      } else if (
+        props.sourceProfile &&
+        props.sourceProfile.titleHref &&
+        props.sourceProfile.titleHref.includes('blog.naver.com')
+      ) {
+        url = props.sourceProfile.titleHref;
+      } else if (props.titleHref && props.titleHref.includes('blog.naver.com')) {
+        url = props.titleHref;
+      }
+
+      results.push({ rank, isAd, url });
+    }
+    for (const k in obj) walkForItems(obj[k], results);
+  }
+}
+
+async function fetchSearchPage(keyword) {
+  const searchUrl =
+    'https://search.naver.com/search.naver?ssc=tab.blog.all&sm=tab_jum&query=' + encodeURIComponent(keyword);
+  const res = await fetch(searchUrl, {
+    headers: { 'User-Agent': UA, 'Accept-Language': 'ko-KR,ko;q=0.9' },
   });
-
-  return ordered;
+  if (!res.ok) throw new Error('네이버 검색 요청 실패: ' + res.status);
+  return res.text();
 }
 
 module.exports = async (req, res) => {
@@ -74,33 +126,40 @@ module.exports = async (req, res) => {
   }
 
   try {
-    let allPosts = [];
-    for (let page = 0; page < MAX_PAGES; page++) {
-      const start = page * 30 + 1;
-      const html = await fetchSearchPage(keyword, start);
-      const posts = extractOrderedPosts(html);
-      if (posts.length === 0) break; // 더 이상 결과 없음
-      allPosts = allPosts.concat(posts);
+    const html = await fetchSearchPage(keyword);
+    const data = extractBootstrapJson(html);
+
+    if (!data) {
+      res.status(422).json({
+        error:
+          '검색 결과 데이터를 읽어오지 못했습니다. 네이버가 화면 구조를 바꿨거나, 일시적으로 요청이 차단됐을 수 있습니다.',
+      });
+      return;
     }
 
-    // 전체에서 중복 제거(페이지 간 겹칠 수 있음) 후 순서 유지
-    const seen = new Set();
-    const uniquePosts = [];
-    for (const p of allPosts) {
-      const key = p.blogId + '/' + p.logNo;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      uniquePosts.push(p);
+    const items = [];
+    walkForItems(data, items);
+
+    if (items.length === 0) {
+      res.status(422).json({ error: '검색 결과 항목을 찾지 못했습니다.' });
+      return;
     }
 
-    const idx = uniquePosts.findIndex(
-      (p) => p.blogId === target.blogId && p.logNo === target.logNo
-    );
+    const match = items.find((item) => {
+      if (!item.url) return false;
+      const parsed = parseBlogUrl(item.url);
+      return parsed && parsed.blogId === target.blogId && parsed.logNo === target.logNo;
+    });
 
-    if (idx === -1) {
-      res.status(200).json({ found: false, checked: uniquePosts.length });
+    if (match) {
+      res.status(200).json({ found: true, rank: match.rank, checked: items.length });
     } else {
-      res.status(200).json({ found: true, rank: idx + 1, checked: uniquePosts.length });
+      const adSlots = items.filter((i) => i.isAd).length;
+      res.status(200).json({
+        found: false,
+        checked: items.length,
+        adSlots,
+      });
     }
   } catch (err) {
     res.status(500).json({ error: String(err.message || err) });
