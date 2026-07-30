@@ -1967,6 +1967,12 @@ function seedIfEmpty() {
           </div>
           <div class="ld-status" id="ld-rank-status"></div>
           <div id="ld-rank-result" style="display:none;margin-bottom:14px;"></div>
+
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <label for="ld-blog-imgcount" style="font-size:12px;color:var(--text2);white-space:nowrap;">본문 이미지 개수</label>
+            <input type="number" id="ld-blog-imgcount" min="0" placeholder="링크로 불러오면 자동 입력, 직접 붙여넣기 시 수동 입력"
+              style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;color:var(--text);outline:none;">
+          </div>
           <textarea class="ld-textarea" id="ld-blog-input" oninput="ldCountBlog()" placeholder="블로그 본문을 붙여넣거나, 위에 링크를 넣고 불러오기를 눌러주세요"></textarea>
           <div class="ld-charcount" id="ld-blog-charcount">0자 (권장 최소 1000자 이상)</div>
           <button class="ld-btn" onclick="ldAnalyzeBlog()">진단하기</button>
@@ -1980,7 +1986,7 @@ function seedIfEmpty() {
             <div class="ld-section-label">글자수·문단 구조</div><div id="ld-blog-misc"></div>
           </div>
         </div>
-        <div class="warn"><strong>참고:</strong> 링크 자동 불러오기와 키워드 순위 확인은 각각 <code>/api/analyze-blog</code>, <code>/api/blog-rank</code> 서버 라우트가 배포되어 있어야 동작합니다. 순위 확인은 네이버 검색 결과 화면 구조에 의존하는 기능이라 네이버가 화면 구조를 바꾸면 일시적으로 안 맞을 수 있어요.</div>
+        <div class="warn"><strong>참고:</strong> 링크 자동 불러오기와 키워드 순위 확인은 각각 <code>/api/analyze-blog</code>, <code>/api/blog-rank</code> 서버 라우트가 배포되어 있어야 동작합니다. 순위 확인은 네이버가 처음 화면에 내려주는 상위 목록(대략 30~35개)까지만 확인하며, "인기글"처럼 광고 형태로 노출되는 자리는 실제 어떤 글인지 확인할 방법이 없습니다. 네이버가 화면 구조를 바꾸면 이 기능도 다시 손봐야 할 수 있어요.</div>
       </div>
     </div>
   </template>
@@ -2129,6 +2135,8 @@ function ldAnalyzeAd(prefix, limit) {
 
 function ldAnalyzeBlog() {
   const text = document.getElementById('ld-blog-input').value.trim();
+  const imgCountRaw = document.getElementById('ld-blog-imgcount').value;
+  const imgCount = imgCountRaw === '' ? null : parseInt(imgCountRaw, 10);
   const riskEl = document.getElementById('ld-blog-risk');
   const ctaEl = document.getElementById('ld-blog-cta');
   const miscEl = document.getElementById('ld-blog-misc');
@@ -2142,17 +2150,23 @@ function ldAnalyzeBlog() {
 
   let score = 100;
 
+  // ── 1. 저품질·어뷰징 리스크 ──
   const foundSpam = LD_BLOG_SPAM_WORDS.filter(w => text.includes(w));
   const foundRiskAd = LD_RISK_WORDS.filter(w => text.includes(w));
   if (foundSpam.length === 0 && foundRiskAd.length === 0) {
-    riskEl.innerHTML += ldItem('pass', '상업성 스팸 패턴이나 과장 표현이 발견되지 않았습니다. 저품질 분류 리스크가 낮습니다.');
+    riskEl.innerHTML += ldItem('pass',
+      '상업성 스팸 패턴(카톡문의, 선팔맞팔 등)이나 "최고", "100%" 같은 과장·단정 표현이 발견되지 않았습니다. ' +
+      '네이버 블로그 로직은 지나치게 상업적이거나 광고성이 짙은 글을 저품질로 분류하는 경향이 있는데, 이 글은 그런 신호가 없어서 그 부분에서는 안전합니다.');
   } else {
     [...foundSpam, ...foundRiskAd].forEach(w => {
       score -= 10;
-      riskEl.innerHTML += ldItem('fail', '<strong>저품질 리스크 표현</strong> — "' + w + '" 은(는) 상업성 과다 노출 또는 어뷰징 신호로 분류되어 블로그 지수에 부정적 영향을 줄 수 있습니다.');
+      riskEl.innerHTML += ldItem('fail',
+        '<strong>저품질 리스크 표현</strong> — "' + w + '" 이(가) 발견됐습니다. 이런 표현은 정보성 글이 아니라 상업적 홍보글로 네이버 로직에 인식될 가능성을 높입니다. ' +
+        '특히 같은 표현이 여러 번 반복되거나 문의 유도가 본문 전체에 걸쳐 나타나면 "저품질 블로그" 판정의 누적 신호가 될 수 있으니, 이런 표현은 본문 안이 아니라 프로필이나 별도 안내 영역으로 옮기는 걸 권장합니다.');
     });
   }
 
+  // 키워드 반복(도배) 체크
   const words = text.replace(/[.,!?"'()\n]/g, ' ').split(/\s+/).filter(w => w.length > 1);
   const freq = {};
   words.forEach(w => freq[w] = (freq[w] || 0) + 1);
@@ -2161,47 +2175,93 @@ function ldAnalyzeBlog() {
   const density = words.length ? maxCount / words.length : 0;
   if (maxWord && density > 0.08 && maxCount >= 5) {
     score -= 15;
-    riskEl.innerHTML += ldItem('fail', '<strong>키워드 반복 과다</strong> — "' + maxWord + '"가 ' + maxCount + '회(전체 단어의 ' + (density * 100).toFixed(0) + '%) 반복되어 키워드 도배로 인식될 수 있습니다.');
+    riskEl.innerHTML += ldItem('fail',
+      '<strong>키워드 반복 과다</strong> — "' + maxWord + '"가 본문에서 ' + maxCount + '회, 전체 단어의 약 ' + (density * 100).toFixed(0) + '%를 차지할 만큼 반복되고 있습니다. ' +
+      '검색 순위를 올리려고 같은 키워드를 억지로 여러 번 넣는 방식은 과거에는 통했지만, 지금의 D.I.A. 로직은 이런 부자연스러운 반복 패턴을 오히려 감점 요인으로 봅니다. ' +
+      '같은 의미를 다른 표현(동의어, 문맥 표현)으로 풀어서 자연스럽게 분산시키는 걸 추천합니다.');
   } else {
-    riskEl.innerHTML += ldItem('pass', '특정 단어의 반복 빈도가 자연스러운 범위입니다.');
+    riskEl.innerHTML += ldItem('pass',
+      '특정 단어가 부자연스럽게 반복되는 패턴 없이 자연스러운 빈도로 작성되어 있습니다. 키워드를 억지로 욱여넣지 않고 문맥에 맞게 풀어 쓴 글이라는 신호로 읽힙니다.');
   }
 
+  // ── 2. 경험·신뢰 신호 ──
   const foundExp = LD_BLOG_EXPERIENCE_WORDS.filter(w => text.includes(w));
   if (foundExp.length >= 2) {
-    ctaEl.innerHTML += ldItem('pass', '직접 경험/후기 기반 신뢰 신호가 충분합니다: ' + foundExp.join(', '));
+    ctaEl.innerHTML += ldItem('pass',
+      '"' + foundExp.join(', ') + '" 같은 1인칭 경험·후기 표현이 여러 개 포함되어 있습니다. ' +
+      'D.I.A.(Deep Intent Analysis) 로직은 문서의 출처가 광고성 발췌문인지, 실제 작성자가 경험한 내용인지를 중요하게 봅니다. ' +
+      '이런 경험 신호가 충분하면 "직접 써본 사람이 쓴 글"이라는 신뢰 점수를 받는 데 유리합니다.');
   } else if (foundExp.length === 1) {
     score -= 8;
-    ctaEl.innerHTML += ldItem('warn', '경험 신호 단어가 1개뿐입니다: ' + foundExp.join(', ') + '. "직접 사용해보니" 같은 1인칭 경험 서술을 더 추가하면 유리합니다.');
+    ctaEl.innerHTML += ldItem('warn',
+      '경험을 드러내는 표현이 "' + foundExp.join(', ') + '" 한 개뿐입니다. 아예 없는 것보다는 낫지만, 신뢰 신호로 보기엔 다소 약한 수준입니다. ' +
+      '"직접 사용해보니 ~했다", "제가 촬영한 사진인데 ~" 처럼 본인의 경험을 구체적으로 서술하는 문장을 본문 중간중간에 2~3곳 더 넣으면 문서 품질 평가에 도움이 됩니다.');
   } else {
     score -= 15;
-    ctaEl.innerHTML += ldItem('warn', '직접 경험을 드러내는 표현이 없습니다. "제가", "직접" 같은 1인칭 서술이 없으면 발췌·비경험 콘텐츠로 판단될 수 있습니다.');
+    ctaEl.innerHTML += ldItem('warn',
+      '본문 전체에서 "제가", "직접", "후기" 같은 1인칭 경험 서술을 찾을 수 없었습니다. ' +
+      '정보 자체는 유용하더라도, 이렇게 경험 신호가 전혀 없는 글은 어딘가에서 발췌하거나 짜깁기한 콘텐츠로 판단될 위험이 있습니다. ' +
+      '실제로 겪은 상황, 느낀 점, 촬영한 사진에 대한 설명 등을 1인칭 시점으로 추가해보시길 권합니다.');
   }
 
+  // 문단 구조
   const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
   if (paragraphs.length >= 4) {
-    ctaEl.innerHTML += ldItem('pass', '문단이 ' + paragraphs.length + '개로 나뉘어 있어 가독성과 체류시간에 유리한 구조입니다.');
+    ctaEl.innerHTML += ldItem('pass',
+      '문단이 ' + paragraphs.length + '개로 나뉘어 있습니다. 문단이 적절히 구분된 글은 독자가 스크롤하면서 끊어 읽기 편해서 체류시간이 길어지는 경향이 있고, ' +
+      '체류시간은 C-Rank가 "이 글이 실제로 도움이 됐는가"를 판단하는 간접 지표 중 하나로 알려져 있습니다.');
   } else {
     score -= 10;
-    ctaEl.innerHTML += ldItem('warn', '문단 구분이 ' + paragraphs.length + '개로 적습니다. 소제목·문단 나누기를 추가해보세요.');
+    ctaEl.innerHTML += ldItem('warn',
+      '문단 구분이 ' + paragraphs.length + '개로 적은 편입니다. 글이 길게 뭉쳐 있으면 모바일 화면에서 부담스러워 보여 독자가 끝까지 읽지 않고 이탈할 가능성이 높아지고, ' +
+      '이런 이탈은 체류시간 저하로 이어져 간접적으로 블로그 지수에 불리하게 작용할 수 있습니다. 소제목을 넣거나 2~3문장마다 줄바꿈을 추가해보세요.');
   }
 
+  // ── 3. 글자수 ──
   const len = text.length;
   if (len >= 1000) {
-    miscEl.innerHTML += ldItem('pass', len + '자 — C-Rank 로직이 선호하는 충분한 문서 길이(1000자 이상)를 충족합니다.');
+    miscEl.innerHTML += ldItem('pass',
+      '본문 길이가 ' + len + '자로, C-Rank 로직이 선호하는 것으로 알려진 최소 권장 분량(약 1000자) 이상을 충족합니다. ' +
+      '너무 짧은 글보다 충분한 정보량을 담은 글이 문서 품질 평가에서 유리한 경향이 있습니다.');
   } else if (len >= 500) {
     score -= 10;
-    miscEl.innerHTML += ldItem('warn', len + '자 — 권장 길이(1000자)에 다소 못 미칩니다. 관련 정보를 더 추가해보세요.');
+    miscEl.innerHTML += ldItem('warn',
+      '본문 길이가 ' + len + '자로, 권장 분량(1000자)의 절반 이상이지만 다소 못 미칩니다. 핵심 정보는 담겨 있더라도 ' +
+      '관련된 배경 설명, 비교 정보, 자주 묻는 질문 등을 조금 더 보강하면 문서로서의 완성도와 정보량 평가 모두에서 이득을 볼 수 있습니다.');
   } else {
     score -= 20;
-    miscEl.innerHTML += ldItem('fail', len + '자 — 분량이 짧아 문서 품질 평가에서 불리할 수 있습니다.');
+    miscEl.innerHTML += ldItem('fail',
+      '본문 길이가 ' + len + '자로 상당히 짧습니다. 분량이 짧으면 정보 밀도가 낮은 글로 평가되어 상위 노출 경쟁에서 불리할 가능성이 높습니다. ' +
+      '주제와 관련된 세부 내용, 경험담, 비교 포인트 등을 추가해 최소 500자, 가능하면 1000자 이상으로 늘리는 걸 권장합니다.');
+  }
+
+  // ── 4. 이미지 개수 ──
+  if (imgCount === null || isNaN(imgCount)) {
+    miscEl.innerHTML += ldItem('warn',
+      '이미지 개수 정보가 없습니다. 링크로 글을 불러오면 자동으로 채워지고, 직접 텍스트를 붙여넣은 경우엔 위 칸에 실제 이미지 개수를 입력하면 이 항목도 함께 진단해드립니다. ' +
+      '참고로 네이버 블로그는 일반적으로 본문에 사진이 5장 이상 포함된 글을 "정성껏 작성된 글"로 평가하는 경향이 있다고 알려져 있습니다.');
+  } else if (imgCount >= 5) {
+    miscEl.innerHTML += ldItem('pass',
+      '본문에 이미지가 ' + imgCount + '장 포함되어 있습니다. 일반적으로 알려진 C-Rank·D.I.A. 로직의 경향상 사진이 5장 이상 포함된 글은 텍스트만 있는 글보다 "성의 있게 작성된 문서"로 평가받는 경우가 많고, ' +
+      '독자 입장에서도 시각 자료가 있으면 체류시간이 늘어나는 효과가 있어 여러모로 유리한 구성입니다.');
+  } else if (imgCount >= 2) {
+    score -= 8;
+    miscEl.innerHTML += ldItem('warn',
+      '본문에 이미지가 ' + imgCount + '장 포함되어 있습니다. 아예 없는 것보다는 좋지만, 통상적으로 언급되는 권장 기준(5장 이상)에는 못 미치는 수준입니다. ' +
+      '글의 각 단계나 주장을 뒷받침하는 사진을 2~3장 더 추가하면 문서의 신뢰도와 체류시간 모두에 도움이 될 수 있습니다.');
+  } else {
+    score -= 15;
+    miscEl.innerHTML += ldItem('fail',
+      '본문에 이미지가 ' + imgCount + '장뿐입니다. 사진이 거의 없는 글은 텍스트만 나열된 것처럼 보여 독자의 체감 신뢰도가 떨어지고, ' +
+      '네이버 블로그 로직 관점에서도 사진·정성 신호가 부족한 문서로 평가될 가능성이 있습니다. 직접 촬영한 사진을 최소 5장 이상 넣는 것을 권장합니다.');
   }
 
   score = ldSetScore('blog', score);
   const vt = document.getElementById('ld-blog-verdict-title');
   const vd = document.getElementById('ld-blog-verdict-desc');
-  if (score >= 80) { vt.textContent = '상위노출 가능성이 높은 글이에요'; vd.textContent = '분량, 경험 신호, 어뷰징 리스크 모두 양호합니다.'; }
-  else if (score >= 55) { vt.textContent = '보완하면 지수에 더 유리해질 글이에요'; vd.textContent = '경험 신호나 문단 구조 등 일부 요소를 보완해보세요.'; }
-  else { vt.textContent = '저품질 분류 리스크가 있는 글이에요'; vd.textContent = '어뷰징 표현, 짧은 분량, 부족한 경험 신호 중 하나 이상이 발견됐습니다.'; }
+  if (score >= 80) { vt.textContent = '상위노출 가능성이 높은 글이에요'; vd.textContent = '분량, 이미지, 경험 신호, 어뷰징 리스크까지 대부분의 항목이 양호합니다. 이 정도 완성도면 꾸준히 발행했을 때 지수에 긍정적으로 쌓일 가능성이 높습니다.'; }
+  else if (score >= 55) { vt.textContent = '보완하면 지수에 더 유리해질 글이에요'; vd.textContent = '치명적인 문제는 없지만, 아래 체크리스트 중 경험 신호·이미지·문단 구조 같은 항목을 하나씩 보완하면 노출 경쟁에서 더 유리해질 여지가 있습니다.'; }
+  else { vt.textContent = '저품질 분류 리스크가 있는 글이에요'; vd.textContent = '어뷰징성 표현, 짧은 분량, 부족한 경험 신호, 적은 이미지 수 중 하나 이상이 발견됐습니다. 발행 전에 아래 항목들을 먼저 보완하는 걸 권장합니다.'; }
 }
 
 async function ldFetchBlogUrl() {
@@ -2215,6 +2275,9 @@ async function ldFetchBlogUrl() {
     const data = await res.json();
     if (!data.text) throw new Error('본문을 찾지 못했습니다');
     document.getElementById('ld-blog-input').value = data.text;
+    if (typeof data.imageCount === 'number') {
+      document.getElementById('ld-blog-imgcount').value = data.imageCount;
+    }
     ldCountBlog();
     status.textContent = '불러오기 완료 (' + data.text.length + '자) — 진단하기를 눌러주세요.';
     ldAnalyzeBlog();
@@ -2234,7 +2297,7 @@ async function ldCheckRank() {
   if (!url) { status.textContent = '먼저 위에 내 블로그 글 링크를 입력해주세요.'; return; }
   if (!keyword) { status.textContent = '확인하고 싶은 키워드를 입력해주세요.'; return; }
 
-  status.textContent = '"' + keyword + '" 검색 결과에서 순위를 확인하는 중... (최대 몇 초 걸릴 수 있어요)';
+  status.textContent = '"' + keyword + '" 검색 결과에서 순위를 확인하는 중... (몇 초 걸릴 수 있어요)';
   try {
     const res = await fetch('/api/blog-rank?url=' + encodeURIComponent(url) + '&keyword=' + encodeURIComponent(keyword));
     const data = await res.json();
@@ -2244,9 +2307,15 @@ async function ldCheckRank() {
     resultEl.style.display = 'block';
     if (data.found) {
       const cls = data.rank <= 10 ? 'good' : data.rank <= 30 ? 'warn' : 'fail';
-      resultEl.innerHTML = '<div class="' + cls + '">"<strong>' + keyword + '</strong>" 블로그 탭 기준 <strong>' + data.rank + '위</strong> (검사 범위: 상위 ' + data.checked + '개)</div>';
+      resultEl.innerHTML = '<div class="' + cls + '">"<strong>' + keyword + '</strong>" 블로그 탭 기준 <strong>' + data.rank + '위</strong> (최초 노출되는 상위 ' + data.checked + '개 중)</div>';
     } else {
-      resultEl.innerHTML = '<div class="fail">상위 ' + data.checked + '위 안에서 이 글을 찾지 못했습니다. ' + data.checked + '위 밖이거나, 비공개/삭제된 글일 수 있습니다.</div>';
+      let msg = '최초 노출되는 상위 ' + data.checked + '개 안에서 이 글을 찾지 못했습니다.';
+      if (data.adSlots > 0) {
+        msg += ' 이 중 ' + data.adSlots + '개는 광고(파워링크성) 슬롯이라 어떤 글이 들어있는지 확인이 안 되는 자리인데, 혹시 내 글이 이런 광고 형태로 노출 중이라면 이 도구로는 순위 확인이 불가능합니다.';
+      } else {
+        msg += ' 그 밖의 순위이거나, 비공개/삭제된 글일 수 있습니다.';
+      }
+      resultEl.innerHTML = '<div class="fail">' + msg + '</div>';
     }
   } catch (err) {
     status.textContent = '순위 확인에 실패했습니다. /api/blog-rank 라우트가 배포되어 있어야 동작합니다. (' + err.message + ')';
